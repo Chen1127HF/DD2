@@ -141,12 +141,12 @@ R26
 R13
 R14
 Emaster_spi
-Z27 w1651172840
+Z27 w1651178067
 R1
 R2
 R3
 Z28 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
-!i122 32
+!i122 51
 Z29 dC:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/modelsim
 Z30 8C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi.vhd
 Z31 FC:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi.vhd
@@ -156,9 +156,9 @@ VUNb9kI0@MdW]8F0_<0Q5V2
 !s100 <LOHh8CH<eOgBbdOG?:jI1
 Z32 OV;C;2020.1;71
 32
-Z33 !s110 1651172848
+Z33 !s110 1651178071
 !i10b 1
-Z34 !s108 1651172848.000000
+Z34 !s108 1651178071.000000
 Z35 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi.vhd|
 Z36 !s107 C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi.vhd|
 !i113 1
@@ -170,11 +170,11 @@ R2
 R3
 R28
 Z38 DEx4 work 10 master_spi 0 22 UNb9kI0@MdW]8F0_<0Q5V2
-!i122 32
+!i122 51
 l57
-Z39 L20 197
-Va7a1993lGGfUeLS74foQD0
-!s100 ISH6XV3QAXhe]22NcjP9S2
+Z39 L20 196
+VQoN;6[ZlJima3NZXabbI60
+!s100 <IieDV@2l0:<NmUWP1QLe3
 R32
 32
 R33
@@ -186,12 +186,12 @@ R36
 R13
 R37
 Emaster_spi_tb
-Z40 w1651172076
+Z40 w1651177180
 R1
 R2
 R3
 R28
-!i122 30
+!i122 45
 R29
 Z41 8C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd
 Z42 FC:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd
@@ -201,9 +201,9 @@ VPHT?WVOGDKb5H>iQF7eSz1
 !s100 ?QP^f0NLZU]@436oa3?G81
 R32
 32
-Z43 !s110 1651172096
+Z43 !s110 1651177342
 !i10b 1
-Z44 !s108 1651172096.000000
+Z44 !s108 1651177342.000000
 Z45 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd|
 Z46 !s107 C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd|
 !i113 1
@@ -216,11 +216,11 @@ R2
 R3
 R28
 DEx4 work 13 master_spi_tb 0 22 PHT?WVOGDKb5H>iQF7eSz1
-!i122 30
+!i122 45
 l27
-L8 93
-V1b@JGQJ[L`5z4`C300c3b2
-!s100 Lbk:3e1?YhjViZeYIS8<Y0
+L8 99
+VADYTK]N7RV]7;oVRB>kB@3
+!s100 ]BEeOlXD95Qo:M]3RcOVl3
 R32
 32
 R43

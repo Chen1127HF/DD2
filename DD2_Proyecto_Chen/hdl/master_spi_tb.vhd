@@ -68,17 +68,23 @@ begin
     wait until clk'event and clk = '1';
     nRst <= '1';
 
-    -- Comprobacion de escritura del master-spi
+    wait until clk'event and clk = '1';
+    wait until clk'event and clk = '1';
+
+    -- Inicializacion entradas
     nWR <= '0';
     ena <= '0';
+    SDO <= '0';
+    dato <= (others => '0');
 
-    -- Esperamos 100 ciclos de reloj
+    -- Esperamos 10 ciclos de reloj
     wait for 10*T_CLK;
     wait until clk'event and clk = '1';
 
-
     -- Comprobacion de escritura del master-spi
     ena <= '1';
+    nWR <= '1';
+    dato <= "1111000011110000";
 
     wait until clk'event and clk = '1';
     ena <= '0';
