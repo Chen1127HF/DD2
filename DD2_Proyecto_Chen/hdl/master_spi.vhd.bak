@@ -164,7 +164,7 @@ begin
     end if;
   end process;
 
-  ena_rd <= '1' when (cnt = 8 or cnt = 16 or cnt = 24 or cnt = 32) and SPC_up = '1' else  --Va a estar encendido por mas tiempo del que deberia
+  ena_rd <= '1' when cnt = 8 or cnt = 16 or cnt = 24 or cnt = 32 else  --Va a estar encendido por mas tiempo del que deberia
             '0';
   
 --

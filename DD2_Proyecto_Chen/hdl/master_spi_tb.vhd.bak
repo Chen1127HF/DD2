@@ -73,7 +73,7 @@ begin
     ena <= '0';
 
     -- Esperamos 100 ciclos de reloj
-    wait for 10*T_CLK;
+    wait for 100*T_CLK;
     wait until clk'event and clk = '1';
 
 

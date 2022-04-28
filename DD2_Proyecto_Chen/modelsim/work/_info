@@ -1,6 +1,7 @@
 m255
 K4
 z2
+!s11e MIXED_VERSIONS
 13
 !s112 1.1
 !i10d 8192
@@ -36,7 +37,7 @@ R1
 R2
 R3
 R4
-Z15 DEx4 work 10 agente_spi 0 22 V2h<[2nA7z`fXj]9B<ieP2
+DEx4 work 10 agente_spi 0 22 V2h<[2nA7z`fXj]9B<ieP2
 l55
 L16
 V0T@dEA4=ldGCR=M2GCnna2
@@ -54,10 +55,10 @@ R14
 Pauxiliar
 R3
 R4
-Z16 w1651036440
+Z15 w1651036440
 R5
-Z17 8C:/Users/victo/Downloads/DD2_Proyecto/hdl/auxiliar.vhd
-Z18 FC:/Users/victo/Downloads/DD2_Proyecto/hdl/auxiliar.vhd
+Z16 8C:/Users/victo/Downloads/DD2_Proyecto/hdl/auxiliar.vhd
+Z17 FC:/Users/victo/Downloads/DD2_Proyecto/hdl/auxiliar.vhd
 l0
 L4
 VieUhjTzVP@KdIL@3eN]jU1
@@ -65,16 +66,16 @@ VieUhjTzVP@KdIL@3eN]jU1
 R8
 32
 b1
-Z19 !s110 1651087837
+Z18 !s110 1651087837
 !i10b 1
-Z20 !s108 1651087837.000000
-Z21 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/victo/Downloads/DD2_Proyecto/hdl/auxiliar.vhd|
-Z22 !s107 C:/Users/victo/Downloads/DD2_Proyecto/hdl/auxiliar.vhd|
+Z19 !s108 1651087837.000000
+Z20 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/victo/Downloads/DD2_Proyecto/hdl/auxiliar.vhd|
+Z21 !s107 C:/Users/victo/Downloads/DD2_Proyecto/hdl/auxiliar.vhd|
 !i113 1
 R13
 R14
 Bbody
-Z23 DPx4 work 8 auxiliar 0 22 ieUhjTzVP@KdIL@3eN]jU1
+Z22 DPx4 work 8 auxiliar 0 22 ieUhjTzVP@KdIL@3eN]jU1
 R3
 R4
 l0
@@ -83,22 +84,22 @@ V3h4?jS8=GfWL^UTb]ONM>1
 !s100 <ieP<7nNK?S`V[Rb7V7F;3
 R8
 32
-R19
+R18
 !i10b 1
+R19
 R20
 R21
-R22
 !i113 1
 R13
 R14
 Ecalc_offset
 w1648717450
 R1
-Z24 DPx4 ieee 16 std_logic_signed 0 22 C<aanc0R`<LWPSe[JYRP^3
+Z23 DPx4 ieee 16 std_logic_signed 0 22 C<aanc0R`<LWPSe[JYRP^3
 R3
 R4
-R23
-Z25 dC:/Users/haofan.chen/Downloads/Entregable/modelsim
+R22
+Z24 dC:/Users/haofan.chen/Downloads/Entregable/modelsim
 8C:/Users/haofan.chen/Downloads/Entregable/hdl/calc_offset.vhd
 FC:/Users/haofan.chen/Downloads/Entregable/hdl/calc_offset.vhd
 l0
@@ -107,9 +108,9 @@ VK8UW0F;cl16m[^g8bX_Wj1
 !s100 VMVNkO722ib5olP7l:7D_1
 R8
 32
-Z26 !s110 1650539023
+Z25 !s110 1650539023
 !i10b 1
-Z27 !s108 1650539023.000000
+Z26 !s108 1650539023.000000
 !s90 -reportprogress|300|-work|work|-2002|-explicit|C:/Users/haofan.chen/Downloads/Entregable/hdl/calc_offset.vhd|
 !s107 C:/Users/haofan.chen/Downloads/Entregable/hdl/calc_offset.vhd|
 !i113 1
@@ -118,11 +119,11 @@ R14
 Eestimador
 w1648717506
 R1
-R24
+R23
 R3
 R4
-R23
-R25
+R22
+R24
 8C:/Users/haofan.chen/Downloads/Entregable/hdl/estimador.vhd
 FC:/Users/haofan.chen/Downloads/Entregable/hdl/estimador.vhd
 l0
@@ -131,14 +132,129 @@ V2H6QP6Id^jH>DWRlUG3bo0
 !s100 R>58Q_[U;eEZ7eX]l^:l92
 R8
 32
-R26
+R25
 !i10b 1
-R27
+R26
 !s90 -reportprogress|300|-work|work|-2002|-explicit|C:/Users/haofan.chen/Downloads/Entregable/hdl/estimador.vhd|
 !s107 C:/Users/haofan.chen/Downloads/Entregable/hdl/estimador.vhd|
 !i113 1
 R13
 R14
+Emaster_spi
+Z27 w1651172840
+R1
+R2
+R3
+Z28 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 32
+Z29 dC:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/modelsim
+Z30 8C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi.vhd
+Z31 FC:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi.vhd
+l0
+L5 1
+VUNb9kI0@MdW]8F0_<0Q5V2
+!s100 <LOHh8CH<eOgBbdOG?:jI1
+Z32 OV;C;2020.1;71
+32
+Z33 !s110 1651172848
+!i10b 1
+Z34 !s108 1651172848.000000
+Z35 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi.vhd|
+Z36 !s107 C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi.vhd|
+!i113 1
+R13
+Z37 tExplicit 1 CvgOpt 0
+Artl
+R1
+R2
+R3
+R28
+Z38 DEx4 work 10 master_spi 0 22 UNb9kI0@MdW]8F0_<0Q5V2
+!i122 32
+l57
+Z39 L20 197
+Va7a1993lGGfUeLS74foQD0
+!s100 ISH6XV3QAXhe]22NcjP9S2
+R32
+32
+R33
+!i10b 1
+R34
+R35
+R36
+!i113 1
+R13
+R37
+Emaster_spi_tb
+Z40 w1651172076
+R1
+R2
+R3
+R28
+!i122 30
+R29
+Z41 8C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd
+Z42 FC:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd
+l0
+L5 1
+VPHT?WVOGDKb5H>iQF7eSz1
+!s100 ?QP^f0NLZU]@436oa3?G81
+R32
+32
+Z43 !s110 1651172096
+!i10b 1
+Z44 !s108 1651172096.000000
+Z45 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd|
+Z46 !s107 C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd|
+!i113 1
+R13
+R37
+Atest
+R38
+R1
+R2
+R3
+R28
+DEx4 work 13 master_spi_tb 0 22 PHT?WVOGDKb5H>iQF7eSz1
+!i122 30
+l27
+L8 93
+V1b@JGQJ[L`5z4`C300c3b2
+!s100 Lbk:3e1?YhjViZeYIS8<Y0
+R32
+32
+R43
+!i10b 1
+R44
+R45
+R46
+!i113 1
+R13
+R37
+Emaster_spi_tv
+w1651164617
+R1
+R2
+R3
+R28
+!i122 6
+R29
+R41
+R42
+l0
+L5 1
+V7mQ_aIJ3O9o^1Wd=F9cPB1
+!s100 7`iR;USC[n8hGU5V2G:Hi3
+R32
+32
+!s110 1651164621
+!i10b 1
+!s108 1651164621.000000
+R45
+R46
+!i113 1
+R13
+R37
 Ppack_test_master_spi
 R1
 R2

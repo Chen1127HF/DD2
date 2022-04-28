@@ -1,20 +1,12 @@
-C:/Users/victo/Downloads/DD2_Proyecto/hdl/agente_spi.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/victo/Downloads/DD2_Proyecto/hdl/agente_spi.vhd
-Model Technology ModelSim ALTERA vcom 10.4d Compiler 2015.12 Dec 30 2015
+C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
 -- Loading package std_logic_arith
 -- Loading package STD_LOGIC_UNSIGNED
--- Compiling entity agente_spi
--- Compiling architecture sim of agente_spi
-
-} {} {}} C:/Users/victo/Downloads/DD2_Proyecto/hdl/auxiliar.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/victo/Downloads/DD2_Proyecto/hdl/auxiliar.vhd
-Model Technology ModelSim ALTERA vcom 10.4d Compiler 2015.12 Dec 30 2015
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Compiling package auxiliar
--- Compiling package body auxiliar
--- Loading package auxiliar
+-- Compiling entity master_spi_tb
+-- Compiling architecture test of master_spi_tb
+-- Loading entity master_spi
 
 } {} {}}
