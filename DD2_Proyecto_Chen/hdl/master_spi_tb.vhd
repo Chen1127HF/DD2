@@ -81,21 +81,29 @@ begin
     wait for 10*T_CLK;
     wait until clk'event and clk = '1';
 
+
     -- Comprobacion de escritura del master-spi
+    ena <= '1';
+    nWR <= '0';
+    dato <= "1111000011110000";
+
+    wait until clk'event and clk = '1';
+    ena <= '0';
+
+    -- Esperamos 500 ciclos de reloj
+    wait for 500*T_CLK;
+    wait until clk'event and clk = '1';
+
+
+    -- Comprobacion de lectura del master-spi
     ena <= '1';
     nWR <= '1';
     dato <= "1111000011110000";
 
     wait until clk'event and clk = '1';
     ena <= '0';
-    -- Esperamos 100 ciclos de reloj
-    wait for 100*T_CLK;
-    wait until clk'event and clk = '1';
-    
 
-    -- Comprobacion de lectura del master-spi
-
-
+   
     -- Fin de simulación
     wait for 1000*T_CLK;
 

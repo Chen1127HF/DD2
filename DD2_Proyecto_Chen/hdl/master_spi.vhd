@@ -61,7 +61,7 @@ begin
   begin
     if nRst = '0' then
       cnt_div <= (others => '0');
-    elsif clk'event and clk = '1' then
+    elsif clk'event and clk = '1' and nCS = '0' then
       if cnt_div = 9 then 				
         cnt_div <= (others => '0');			
       else						
@@ -76,15 +76,15 @@ begin
          '1';
   SPC_up <= '1' when cnt_div = 6 and nCS = '0' else
             '0';
-  nCS <= '0' when ini = '1' or cnt /= 0 else
+  nCS <= '0' when ini = '1' or cnt > 0 else
          '1';
   
   -- Generacion de las señales de control
                                 
-  ena_SDO <= '1' when nCS = '0' and cnt = SPI_t_v_SDO else
+  ena_SDO <= '1' when nCS = '0' and nWR = '1' and cnt_div = SPI_T_SPC_L + SPI_t_v_SDO else
              '0';
 
-  ena_SDI <= '1' when nCS = '0' and cnt = (SPI_T_SPC_L - SPI_t_su_SDI)else
+  ena_SDI <= '1' when nCS = '0' and nWR = '0' and cnt_div = SPI_t_su_SDI else
              '0'; 
 
   -- Contador 
@@ -118,7 +118,7 @@ begin
       reg_SDO <= (others =>'0');
     elsif clk'event and clk = '1' then                     
       if nCS = '1' then
-      elsif ena_SDO = '1' and nWR = '0' then
+      elsif ena_SDO = '1' and nWR = '1' then
         reg_SDO <= reg_SDO(6 downto 0) & SDO;
       end if;
     end if;
@@ -138,7 +138,7 @@ begin
         reg_SDI <= (others => '0');
       elsif ini = '1' then
         reg_SDI <= dato;
-      elsif ena_SDI = '1' and nWR = '1' then  
+      elsif ena_SDI = '1' and nWR = '0' then  
         reg_SDI <= reg_SDI(14 downto 0) & '0';
       end if;
     end if;
