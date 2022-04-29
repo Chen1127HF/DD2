@@ -6,17 +6,18 @@ entity master_spi_tb is
 end entity;
 
 architecture test of master_spi_tb is
-  signal clk:           std_logic;
-  signal nRst:          std_logic;
-  signal ena:           std_logic;                     -- inicio de transacción
-  signal dato:          std_logic_vector(15 downto 0); -- byte de dato introducido
-  signal SDO:           std_logic;                     -- Slave Data Output (Master input)
-  signal ena_rd:        std_logic;                     -- habilitación de lectura
-  signal data_rd:       std_logic_vector(7 downto 0);  -- byte de SDO, entregado por slave
-  signal nCS:           std_logic;                     -- Chip Selection
-  signal SPC:           std_logic;                     -- clock SPI (5 MHz) 
-  signal SDI:           std_logic;                     -- Slave Data input  (connected to Master SDO)
-  signal nWR:           std_logic;
+  signal clk:     std_logic;
+  signal nRst:    std_logic;
+  signal ena:     std_logic;                     -- inicio de transacción
+  signal dato:    std_logic_vector(15 downto 0); -- byte de dato introducido
+  signal SDO:     std_logic;                     -- Slave Data Output (Master input)
+  signal ena_rd:  std_logic;                     -- habilitación de lectura
+  signal data_rd: std_logic_vector(7 downto 0);  -- byte de SDO, entregado por slave
+  signal nCS:     std_logic;                     -- Chip Selection
+  signal SPC:     std_logic;                     -- clock SPI (5 MHz) 
+  signal SDI:     std_logic;                     -- Slave Data input  (connected to Master SDO)
+  signal nWR:     std_logic;
+  signal fin_tx:  std_logic;
 
   signal tic_200ns:	std_logic;	
 
@@ -26,18 +27,7 @@ architecture test of master_spi_tb is
 
 begin
 
-  dut: entity work.master_spi(rtl)
-       port map(clk     => clk,
-                nRst    => nRst,
-                ini     => ena,
-                nWR     => nWR,
-		dato    => dato,
-		SDO     => SDO,
-                ena_rd  => ena_rd,
-                data_rd => data_rd,
-		nCS     => nCS,
-		SPC     => SPC,
-		SDI     => SDI);
+
 
   -- Reloj de 20 ns (50 MHz)
   process
@@ -68,9 +58,6 @@ begin
     wait until clk'event and clk = '1';
     nRst <= '1';
 
-    wait until clk'event and clk = '1';
-    wait until clk'event and clk = '1';
-
     -- Inicializacion entradas
     nWR <= '0';
     ena <= '0';
@@ -82,7 +69,7 @@ begin
     wait until clk'event and clk = '1';
 
 
-    -- Comprobacion de escrituea del master-spi
+    -- Comprobacion de escritura del master-spi
     ena <= '1';
     nWR <= '0';
     dato <= "1111000011110000";
@@ -90,8 +77,8 @@ begin
     wait until clk'event and clk = '1';
     ena <= '0';
 
-    -- Esperamos 50 ciclos de reloj
-    wait for 50*T_CLK;
+    -- Esperamos 500 ciclos de reloj
+    wait for 500*T_CLK;
     wait until clk'event and clk = '1';
 
 
@@ -111,6 +98,34 @@ begin
     report "done"
     severity failure;
   end process;
+
+  dut: entity work.master_spi(rtl)
+       port map(clk     => clk,
+                nRst    => nRst,
+                ini     => ena,
+                nWR     => nWR,
+		dato    => dato,
+		SDO     => SDO,
+                ena_rd  => ena_rd,
+                data_rd => data_rd,
+		nCS     => nCS,
+		SPC     => SPC,
+		SDI     => SDI);
+
+  monitores:
+       entity work.monitor_spi_tb(test)
+       port map(clk     => clk,
+                nRst    => nRst,
+                ini     => ena,
+                nWR     => nWR,
+		dato    => dato,
+		SDO     => SDO,
+                ena_rd  => ena_rd,
+                data_rd => data_rd,
+		nCS     => nCS,
+		SPC     => SPC,
+		SDI     => SDI);
+
 end test;
 
 

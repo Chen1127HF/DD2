@@ -111,7 +111,7 @@ begin
 
   X_out_bias <=  offset_X        when offset_rdy = '1' else  -- A completar por el estudiante
                 (others => '0');
-  Y_out_bias <=  offset_Y        when offset_rdy = '1' else  -- A completar por el estudiante
+  Y_out_bias <=  offset_Y          when offset_rdy = '1' else  -- A completar por el estudiante
                 (others => '0');
 
 

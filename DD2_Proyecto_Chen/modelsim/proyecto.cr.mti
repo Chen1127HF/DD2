@@ -1,15 +1,4 @@
-C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd
-Model Technology ModelSim ALTERA vcom 10.4d Compiler 2015.12 Dec 30 2015
--- Loading package STANDARD
--- Loading package TEXTIO
--- Loading package std_logic_1164
--- Loading package std_logic_arith
--- Loading package STD_LOGIC_UNSIGNED
--- Compiling entity master_spi_tb
--- Compiling architecture test of master_spi_tb
--- Loading entity master_spi
-
-} {} {}} C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/estimador.vhd {0 {vcom -work work -2002 -explicit -stats=none C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/estimador.vhd
+C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/estimador.vhd {0 {vcom -work work -2002 -explicit -stats=none C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/estimador.vhd
 Model Technology ModelSim ALTERA vcom 10.4d Compiler 2015.12 Dec 30 2015
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -21,7 +10,18 @@ Model Technology ModelSim ALTERA vcom 10.4d Compiler 2015.12 Dec 30 2015
 -- Compiling architecture rtl of estimador
 ** Error: C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/estimador.vhd(82): near "end": syntax error
 
-} {11.0 12.0} {}} C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/calc_offset.vhd {0 {vcom -work work -2002 -explicit -stats=none C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/calc_offset.vhd
+} {11.0 12.0} {}} C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd
+Model Technology ModelSim ALTERA vcom 10.4d Compiler 2015.12 Dec 30 2015
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity master_spi_tb
+-- Compiling architecture test of master_spi_tb
+-- Loading entity master_spi
+
+} {} {}} C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/calc_offset.vhd {0 {vcom -work work -2002 -explicit -stats=none C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/calc_offset.vhd
 Model Technology ModelSim ALTERA vcom 10.4d Compiler 2015.12 Dec 30 2015
 -- Loading package STANDARD
 -- Loading package TEXTIO
@@ -35,15 +35,15 @@ Model Technology ModelSim ALTERA vcom 10.4d Compiler 2015.12 Dec 30 2015
 ** Error: C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/calc_offset.vhd(114): near "when": syntax error
 ** Error: C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/calc_offset.vhd(118): VHDL Compiler exiting
 
-} {11.0 14.0} {}} C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/master_spi.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/master_spi.vhd
+} {11.0 14.0} {}} C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/agente_spi.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/agente_spi.vhd
 Model Technology ModelSim ALTERA vcom 10.4d Compiler 2015.12 Dec 30 2015
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
 -- Loading package std_logic_arith
 -- Loading package STD_LOGIC_UNSIGNED
--- Compiling entity master_spi
--- Compiling architecture rtl of master_spi
+-- Compiling entity agente_spi
+-- Compiling architecture sim of agente_spi
 
 } {} {}} C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/auxiliar.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/auxiliar.vhd
 Model Technology ModelSim ALTERA vcom 10.4d Compiler 2015.12 Dec 30 2015
@@ -54,14 +54,14 @@ Model Technology ModelSim ALTERA vcom 10.4d Compiler 2015.12 Dec 30 2015
 -- Compiling package body auxiliar
 -- Loading package auxiliar
 
-} {} {}} C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/agente_spi.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/agente_spi.vhd
+} {} {}} C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/master_spi.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/victo/Downloads/GIT/DD2/DD2_Proyecto_Chen/hdl/master_spi.vhd
 Model Technology ModelSim ALTERA vcom 10.4d Compiler 2015.12 Dec 30 2015
 -- Loading package STANDARD
 -- Loading package TEXTIO
 -- Loading package std_logic_1164
 -- Loading package std_logic_arith
 -- Loading package STD_LOGIC_UNSIGNED
--- Compiling entity agente_spi
--- Compiling architecture sim of agente_spi
+-- Compiling entity master_spi
+-- Compiling architecture rtl of master_spi
 
 } {} {}}

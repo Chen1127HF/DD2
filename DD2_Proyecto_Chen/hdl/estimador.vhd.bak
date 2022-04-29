@@ -76,7 +76,7 @@ begin
 
 
   -- Valor medio de las ultimas N muestras
-  --X_media <= -- A completar por el estudiante
-  --Y_media <= -- A completar por el estudiante
+  X_media <= -- A completar por el estudiante
+  Y_media <= -- A completar por el estudiante
 
 end architecture;
