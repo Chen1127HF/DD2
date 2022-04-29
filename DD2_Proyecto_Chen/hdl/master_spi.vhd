@@ -19,13 +19,6 @@ port(clk:           in     std_logic;
 end entity;
 
 architecture rtl of master_spi is
-  -- Estado del automata
- -- type t_estado is (libre, escritura, lectura);
- -- signal estado: t_estado;
-
-  -- Disponibilidad
-  -- Signal fin_tx: std_logic; -- Se podría saber simplemente leyendo la salida CS pero no me gusta hacerlo asi
-  
   -- Divisor de frecuencias
   signal cnt_div:       std_logic_vector(3 downto 0); -- Le sobrabran bytes
 
@@ -34,10 +27,6 @@ architecture rtl of master_spi is
   signal ena_SDO:       std_logic;  -- Habilitacion de desplazamiento del registro de salida
   signal ena_SDI:       std_logic;  -- Habilitacion de desplazamiento del registro de entrada
   signal SPC_up:        std_logic;  -- Flanco de subida en SPC
-
---signal cnt_SPC:       std_logic_vector(4 downto 0); 
---signal ena_up_CS:     std_logic;  -- Deshabilitacion de CS (paso de '0' a '1')
---signal ena_down_CS:   std_logic;  -- Habilitacion de CS (paso de '1' a '0')
   
 	 
   -- Constantes correspondientes a las especificaciones de tiempo SPI
@@ -68,11 +57,15 @@ begin
   begin
     if nRst = '0' then
       cnt_div <= (others => '0');
-    elsif clk'event and clk = '1' and nCS = '0' then
-      if cnt_div > 8 then 				
-        cnt_div <= (others => '0');			
-      else						
-        cnt_div <= cnt_div + 1;			
+    elsif clk'event and clk = '1' then
+      if nCS = '0' then
+        if cnt_div > 8 then 				
+          cnt_div <= (others => '0');			
+        else						
+          cnt_div <= cnt_div + 1;			
+        end if;
+      else
+        cnt_div <= (others => '0');
       end if;
     end if;
   end process;
@@ -85,13 +78,13 @@ begin
             '0';
   nCS    <= '0' when ini = '1' or cnt > 0 else
             '1';
-  
-  -- Generacion de las señales de control
+
+   -- Generacion de las señales de control
                                 
-  ena_SDO <= '1' when nCS = '0' and reg_nWR = '1' and cnt_div = SPI_T_SPC_L + SPI_t_v_SDO else
+  ena_SDO <= '1' when nCS = '0' and reg_nWR = '1' and cnt>8 and cnt_div = SPI_T_SPC_L + SPI_t_v_SDO else
              '0';
 
-  ena_SDI <= '1' when nCS = '0' and reg_nWR = '0' and cnt_div = SPI_t_su_SDI else
+  ena_SDI <= '1' when nCS = '0' and (reg_nWR = '0' or (reg_nWR = '1' and cnt<9 and cnt>0)) and cnt_div = SPI_t_su_SDI else
              '0'; 
 
   -- Contador 
@@ -102,11 +95,11 @@ begin
       cnt <= (others => '0');
       reg_nWR <= '0';
     elsif clk'event and clk = '1' then
-      if ini = '1' and fin_tx = '1' then
+      if ini = '1' then
         cnt <= (0 => '1', others => '0');
         reg_nWR <= nWR;
       elsif SPC_up = '1' then
-        if (cnt = 32 and reg_nWR = '1') or (cnt = 16 and reg_nWR = '0') then
+        if (cnt = 40 and reg_nWR = '1') or (cnt = 16 and reg_nWR = '0') then
           cnt <= (others => '0');        
         else
           cnt <= cnt + 1;
@@ -115,11 +108,9 @@ begin
     end if;
   end process;
 
-  ena_rd <= '1' when (cnt = 8 or cnt = 16 or cnt = 24 or cnt = 32) and SPC_up = '1' and reg_nWR = '1' else
+  ena_rd <= '1' when (cnt = 41 or cnt = 17 or cnt = 25 or cnt = 33) and SPC_up = '1' and reg_nWR = '1' else
             '0'; -- Hay alguna forma facil de expresar esto?
-
-  fin_tx <= '0' when ini = '1' or cnt > 0 else
-            '1';
+  -- Como se arregla esta chapuza?
 
   -- Registro de entrada    
   process(clk, nRst)
@@ -130,12 +121,14 @@ begin
       if nCS = '1' then
       elsif ena_SDO = '1' then      -- He quitado de aqui la comprobación de nRW porque se hace en ena_SDO
         reg_SDO <= reg_SDO(6 downto 0) & SDO;
+      elsif ena_rd = '1' then
+        data_rd <= reg_SDO;
       end if;
     end if;
   end process;
 
-  data_rd <= reg_SDO when ena_rd = '1' else  --Mantenemos el registro?
-             (others => '0');
+ -- data_rd <= reg_SDO when ena_rd = '1';  --Mantenemos el registro?
+        
 
              
   -- Registro de salida     
@@ -147,7 +140,7 @@ begin
       if nCS = '1' then
         reg_SDI <= (others => '0');
       elsif ini = '1' then
-        reg_SDI <= dato;
+          reg_SDI <= dato;
       elsif ena_SDI = '1' then   -- He quitado de aqui la comprobación de nRW porque se hace en ena_SDO
         reg_SDI <= reg_SDI(14 downto 0) & '0';
       end if;
@@ -156,70 +149,5 @@ begin
 
   SDI <= reg_SDI(15) when ena_SDI = '1';-- else  -- Mantenemos el registro?
          --'0'; -- Hay alguna forma de poner esto para que se mantenga el dato a la salida?
-
-
-
-
---  process(clk, nRst)
---  begin
---    if nRst = '0' then
---      cnt_SPC <= (0 => '1', others => '0');
---    elsif clk'event and clk = '1' then
---      if nCS = '0' then
---        if cnt_div < 5 then
---          SPC <= '0';
---        else
---          SPC <= '1';
---        end if;
---      end if;
---    end if;
---  end process;
-
-  -- cnt_SPC <= cnt_SPC + 1;
-  
-
-
-
-  -- Maquina de estados para el control de transacciones
---  process(clk, nRst)
---  begin
---    if nRst = '0' then
---      estado <= libre;
---      nWR    <= '0';
---    elsif clk'event and clk = '1' then
---      case estado is
---        when libre =>
---          if ini = '1' then
---            if nWR= '1' then
---              estado  <= escritura;
---            else
---              estado <= lectura;
---            end if;
---          end if;
---        when escritura =>
---          if __________ then
---		    
---          elsif nWR = '1' then
---		    estado <= cargar_byte;
---          else
---            nCS <= '1';
---            estado <= libre;
---          end if;
---        when lectura =>
---          if __________ then
---		    
---          elsif
---            nCS <= '1';
---            estado <= libre;
---          end if;
---      end case;
---    end if;
---  end process;
-
-  -- Contador
-
-  
-
-
 
 end rtl;

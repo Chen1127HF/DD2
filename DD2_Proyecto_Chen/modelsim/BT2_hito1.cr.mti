@@ -17,6 +17,19 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Compiling entity agente_spi
 -- Compiling architecture sim of agente_spi
 
+} {} {}} C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity master_spi_tb
+-- Compiling architecture test of master_spi_tb
+-- Loading entity master_spi
+-- Loading entity agente_spi
+-- Loading entity monitor_spi_tb
+
 } {} {}} C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/estimador.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/estimador.vhd
 Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
 -- Loading package STANDARD
@@ -38,5 +51,15 @@ Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 
 -- Loading package STD_LOGIC_SIGNED
 -- Compiling entity calc_offset
 -- Compiling architecture rtl of calc_offset
+
+} {} {}} C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/modelsim/monitor_spi_tb.vhd {1 {vcom -work work -2002 -explicit -stats=none C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/modelsim/monitor_spi_tb.vhd
+Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity monitor_spi_tb
+-- Compiling architecture test of monitor_spi_tb
 
 } {} {}}

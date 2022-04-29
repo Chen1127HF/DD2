@@ -13,7 +13,7 @@ port(clk:           in std_logic;
      data_rd:       in std_logic_vector(7 downto 0);  -- byte de SDO, entregado por slave
      nCS:           in std_logic;                     -- Chip Selection
      SPC:           in std_logic;                     -- clock SPI (5 MHz) 
-     SDI:           in std_logic;                      -- Slave Data input  (connected to Master SDO)
+     SDI:           in std_logic;                     -- Slave Data input  (connected to Master SDO)
      fin_tx:        in std_logic);
 end entity;
 

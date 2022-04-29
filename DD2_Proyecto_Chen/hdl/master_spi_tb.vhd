@@ -18,8 +18,12 @@ architecture test of master_spi_tb is
   signal SDI:     std_logic;                     -- Slave Data input  (connected to Master SDO)
   signal nWR:     std_logic;
   signal fin_tx:  std_logic;
+  signal pos_X:   std_logic_vector(1 downto 0);
+  signal pos_Y:   std_logic_vector(1 downto 0);
 
-  signal tic_200ns:	std_logic;	
+  signal tic_200ns:	std_logic;
+  
+	
 
   constant T_CLK: 	time:= 20 ns;
   constant T_CLK5:	time:= 200 ns;
@@ -61,7 +65,6 @@ begin
     -- Inicializacion entradas
     nWR <= '0';
     ena <= '0';
-    SDO <= '0';
     dato <= (others => '0');
 
     -- Esperamos 10 ciclos de reloj
@@ -83,6 +86,8 @@ begin
 
 
     -- Comprobacion de lectura del master-spi
+    pos_X <= "00";
+    pos_Y <= "00";
     ena <= '1';
     nWR <= '1';
     dato <= "1111000011110000";
@@ -112,6 +117,15 @@ begin
 		SPC     => SPC,
 		SDI     => SDI,
                 fin_tx  => fin_tx);
+  agente: 
+       entity work.agente_spi(sim)
+       port map(pos_X => pos_X,
+                pos_Y => pos_Y,
+                nCS => nCS,
+                SPC => SPC,
+                SDI => SDI,
+                SDO => SDO);
+
 
   monitores:
        entity work.monitor_spi_tb(test)
