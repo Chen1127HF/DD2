@@ -16,22 +16,17 @@ architecture test of master_spi_tb is
   signal nCS:     std_logic;                     -- Chip Selection
   signal SPC:     std_logic;                     -- clock SPI (5 MHz) 
   signal SDI:     std_logic;                     -- Slave Data input  (connected to Master SDO)
-  signal nWR:     std_logic;
+  
   signal fin_tx:  std_logic;
   signal pos_X:   std_logic_vector(1 downto 0);
   signal pos_Y:   std_logic_vector(1 downto 0);
 
   signal tic_200ns:	std_logic;
-  
 	
-
   constant T_CLK: 	time:= 20 ns;
   constant T_CLK5:	time:= 200 ns;
 
-
 begin
-
-
 
   -- Reloj de 20 ns (50 MHz)
   process
@@ -41,15 +36,6 @@ begin
     clk <= '1';
     wait for T_CLK/2;
   end process;
-
---  -- Reloj de 200 ns (5 MHz)
---  process
---  begin
---    clk <= '0';
---    wait for T_CLK5/2;
---    clk <= '1';
---    wait for T_CLK5/2;
---  end process;
 
   process
   begin
@@ -63,9 +49,8 @@ begin
     nRst <= '1';
 
     -- Inicializacion entradas
-    nWR <= '0';
+
     ena <= '0';
-    SDO <= '0';
     dato <= (others => '0');
 
     -- Esperamos 10 ciclos de reloj
@@ -74,12 +59,22 @@ begin
 
 
     -- Comprobacion de escritura del master-spi
-    ena <= '1';
-    nWR <= '0';
-    dato <= "1111000011110000";
+      dato <= (others => '0');
+      ena <= '1';
+      wait until clk'event and clk = '1';
+      ena <= '0';
+      wait until clk'event and clk = '1' and fin_tx = '1';
 
-    wait until clk'event and clk = '1';
-    ena <= '0';
+
+--    for i in 1 to 1927 loop
+--      ena <= '1';
+--      wait until clk'event and clk = '1';
+--      ena <= '0';
+--      wait until clk'event and clk = '1' and fin_tx = '1';
+--      wait until clk'event and clk = '1';
+--      wait until clk'event and clk = '1';
+--      dato <= dato + 11;
+--    end loop;
 
     -- Esperamos 500 ciclos de reloj
     wait for 500*T_CLK;
@@ -87,15 +82,21 @@ begin
 
 
     -- Comprobacion de lectura del master-spi
+    dato <= "1000000000000000";
     pos_X <= "00";
     pos_Y <= "00";
-    ena <= '1';
-    nWR <= '1';
-    dato <= "1111000011110000";
-
-    wait until clk'event and clk = '1';
-    ena <= '0';
-
+    for i in 1 to 4 loop
+      pos_X <= pos_X +1;
+      for j in 1 to 4 loop 
+        pos_Y <= pos_Y + 1;
+        ena <= '1';
+        wait until clk'event and clk = '1';
+        ena <= '0';
+        wait until clk'event and clk = '1' and fin_tx = '1';
+        wait until clk'event and clk = '1';
+        wait until clk'event and clk = '1';
+      end loop;
+    end loop;
    
     -- Fin de simulación
     wait for 1000*T_CLK;
@@ -109,7 +110,6 @@ begin
        port map(clk     => clk,
                 nRst    => nRst,
                 ini     => ena,
-                nWR     => nWR,
 		dato    => dato,
 		SDO     => SDO,
                 ena_rd  => ena_rd,
@@ -133,7 +133,6 @@ begin
        port map(clk     => clk,
                 nRst    => nRst,
                 ini     => ena,
-                nWR     => nWR,
 		dato    => dato,
 		SDO     => SDO,
                 ena_rd  => ena_rd,

@@ -14,8 +14,8 @@ port(pos_X:   in std_logic_vector(1 downto 0);
 end entity;
 
 architecture sim of agente_spi is
- -- type t_estado is(reposo, byte_1st_Rd, byte_1st_Wr, enviar_lecturas, registrar_comando);
- -- signal estado: t_estado;
+  type t_estado is(reposo, byte_1st_Rd, byte_1st_Wr, enviar_lecturas, registrar_comando);
+  signal estado: t_estado;
 
   signal reg_comandos: std_logic_vector(7 downto 0) := X"00";
   signal reg_lecturas: std_logic_vector(31 downto 0) := X"4000_80ff"; --offset 1, -2

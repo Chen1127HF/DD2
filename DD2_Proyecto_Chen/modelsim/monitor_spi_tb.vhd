@@ -6,7 +6,6 @@ entity monitor_spi_tb is
 port(clk:           in std_logic;
      nRst:          in std_logic;
      ini:           in std_logic;                     -- inicio de transacción
-     nWR:           in std_logic;
      dato:          in std_logic_vector(15 downto 0); -- byte de dato introducido
      SDO:           in std_logic;                     -- Slave Data Output (Master input)
      ena_rd:        in std_logic;                     -- habilitación de lectura
@@ -27,6 +26,7 @@ begin
   process(clk, nRst)
    variable ena_assert: boolean := false;
    variable nCS_T1: std_logic;
+   variable fin_tx_T1: std_logic;
   begin
     if nRst'event and nRst = '0' then
       ena_assert := false;
@@ -46,9 +46,17 @@ begin
         report "Error: CS se ha activado cuando no debería"
         severity error;
 
-      -- Comprobar que ha terminado antes de tiempo?
-      end if;
+      elsif fin_tx_T1 = '1' then
+        assert nCS = '1'
+        report "Error: CS no se ha desactivado cuando se ha terminado la tx"
+        severity error;
 
+      elsif nCS_T1 = '0' then
+        assert nCS = '0'
+        report "Error: CS se ha desactivado cuando no debería"
+        severity error;
+      end if;
+      fin_tx_T1 := fin_tx;
       nCS_T1 := nCS;
     end if;
   end process;
