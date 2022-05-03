@@ -9,7 +9,7 @@ port(clk:           in     std_logic;
      dato:          in     std_logic_vector(15 downto 0); -- byte de dato introducido
      SDO:           in     std_logic;                     -- Slave Data Output (Master input)
      ena_rd:        buffer std_logic;                     -- habilitación de lectura
-     data_rd:       buffer std_logic_vector(7 downto 0);  -- byte de SDO, entregado por slave
+     reg_SDO:       buffer std_logic_vector(7 downto 0);  -- byte de SDO, entregado por slave
      nCS:           buffer std_logic;                     -- Chip Selection
      SPC:           buffer std_logic;                     -- clock SPI (5 MHz) 
      SDI:           buffer std_logic;                     -- Slave Data input  (connected to Master SDO)
@@ -53,7 +53,6 @@ architecture rtl of master_spi is
 
   -- Registros
   signal reg_SDI: std_logic_vector(15 downto 0);
-  signal reg_SDO: std_logic_vector(7 downto 0);
   signal reg_nWR: std_logic;
 
 begin
@@ -67,14 +66,14 @@ begin
     elsif clk'event and clk = '1' then
 
       if ini = '1' then                        -- Se inicia la comunicacion
-        reg_nWR <= dato(15);  -- Esto aqui?
+        reg_nWR <= dato(15);
         cnt_div <= (0=>'1', others => '0');
 
       elsif fin_tx = '1' then                  -- Se termina la comunicacion
         cnt_div <= (others => '0');
 
-      elsif cnt_div > 9 then                   -- Reiniciar contador			
-        cnt_div <= (0=>'1', others => '0');
+      elsif cnt_div > 10 then                   -- Reiniciar contador			
+        cnt_div <= (1=>'1', others => '0');
 			
       elsif cnt_div /= 0 then                  -- Contar	
         cnt_div <= cnt_div + 1;
@@ -84,16 +83,16 @@ begin
 
   -- Generacion de SPC
   
-  SPC      <= '0' when nCS = '0' and cnt_div /= 0 and cnt_div < 6 else
+  SPC      <= '0' when nCS = '0' and cnt_div > 1 and cnt_div < 7 else
               '1';
 
-  SPC_up   <= '1' when nCS = '0' and cnt_div = 6 else
+  SPC_up   <= '1' when nCS = '0' and cnt_div = 7 else
               '0';
 
   SPC_down <= '1' when nCS = '0' and cnt_div = SPI_t_su_SDI else
               '0';
 
-  nCS      <= '0' when ini = '1' or  cnt_div > 0 else
+  nCS      <= '0' when cnt_div > 0 else
               '1';
 
   -- Contador bits
@@ -110,8 +109,7 @@ begin
     end if;
   end process;
 
-  ena_bit <= '1' when cnt_bit = 7 and SPC_up = '1' and (reg_nWR = '0' or cnt_byte /= 2) else -- PREGUNTAR: por que hay un ciclo de reloj extra entre lectura y escritura?
-             '1' when cnt_bit = 8 and SPC_up = '1' and cnt_byte = 2 and reg_nWR = '1' else  -- Generacion de las señales de control
+  ena_bit <= '1' when cnt_bit = 7 and SPC_up = '1' else
              '0';
 
   -- Contador bytes
@@ -137,30 +135,28 @@ begin
 
   ena_SDI <= '1' when SPC_down = '1' and reg_nWR = '0' else
              '1' when SPC_down = '1' and reg_nWR = '1' and cnt_byte = 1 else
-             '0';
-
-  ena_rd  <= '1' when ena_bit = '1' and SPC_up = '1' and ena_SDO = '1' else
-             '0';                                 
+             '0';                            
 
   -- Registro de entrada    
   process(clk, nRst)
   begin
     if nRst = '0' then
       reg_SDO <= (others =>'0');
-      data_rd <= (others =>'0');
     elsif clk'event and clk = '1' then                     
       if nCS = '1' then
-      elsif ena_SDO = '1' then     
+        ena_rd <= '0';
+      elsif ena_SDO = '1' then    
         reg_SDO <= reg_SDO(6 downto 0) & SDO;
-        if ena_rd = '1' then
-          data_rd <= reg_SDO;
+        if ena_bit = '1' then
+          ena_rd <= '1';
         end if;
+      else
+          ena_rd <= '0';
       end if;
     end if;
   end process;
         
 
-             
   -- Registro de salida     
   process(clk, nRst)
   begin

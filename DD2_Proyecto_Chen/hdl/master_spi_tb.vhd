@@ -49,7 +49,6 @@ begin
     nRst <= '1';
 
     -- Inicializacion entradas
-
     ena <= '0';
     dato <= (others => '0');
 
@@ -57,49 +56,58 @@ begin
     wait for 10*T_CLK;
     wait until clk'event and clk = '1';
 
-
     -- Comprobacion de escritura del master-spi
-      dato <= (others => '0');
-      ena <= '1';
-      wait until clk'event and clk = '1';
-      ena <= '0';
-      wait until clk'event and clk = '1' and fin_tx = '1';
+    dato <= (others => '0');
+    ena <= '1';
+    wait until clk'event and clk = '1';
+    ena <= '0';
+    wait until clk'event and clk = '1' and fin_tx = '1';
 
+    dato <= "0101010101010101";
+    ena <= '1';
+    wait until clk'event and clk = '1';
+    ena <= '0';
+    wait until clk'event and clk = '1' and fin_tx = '1';
 
---    for i in 1 to 1927 loop
---      ena <= '1';
---      wait until clk'event and clk = '1';
---      ena <= '0';
---      wait until clk'event and clk = '1' and fin_tx = '1';
---      wait until clk'event and clk = '1';
---      wait until clk'event and clk = '1';
---      dato <= dato + 11;
---    end loop;
+    dato <= "0101011110000000";
+    ena <= '1';
+    wait until clk'event and clk = '1';
+    ena <= '0';
+    wait until clk'event and clk = '1' and fin_tx = '1';
+
+    dato <= "0101010001100011";
+    ena <= '1';
+    wait until clk'event and clk = '1';
+    ena <= '0';
+    wait until clk'event and clk = '1' and fin_tx = '1';
 
     -- Esperamos 500 ciclos de reloj
     wait for 500*T_CLK;
     wait until clk'event and clk = '1';
 
 
+
+
+
     -- Comprobacion de lectura del master-spi
-    dato <= "1000000000000000";
-    pos_X <= "00";
-    pos_Y <= "00";
-    for z in 1 to 3 loop
-    for i in 1 to 4 loop
-      pos_X <= pos_X +1;
-      for j in 1 to 4 loop 
-        pos_Y <= pos_Y + 1;
-        ena <= '1';
-        wait until clk'event and clk = '1';
-        ena <= '0';
-        wait until clk'event and clk = '1' and fin_tx = '1';
-        wait until clk'event and clk = '1';
-        wait until clk'event and clk = '1';
-      end loop;
-    end loop;
-    end loop;
-   
+    dato <= (others => '1');
+    ena <= '1';
+    wait until clk'event and clk = '1';
+    ena <= '0';
+    wait until clk'event and clk = '1' and fin_tx = '1';
+
+    dato <= "1010101010101010";
+    ena <= '1';
+    wait until clk'event and clk = '1';
+    ena <= '0';
+    wait until clk'event and clk = '1' and fin_tx = '1';
+
+    dato <= "1101110011110000";
+    ena <= '1';
+    wait until clk'event and clk = '1';
+    ena <= '0';
+    wait until clk'event and clk = '1' and fin_tx = '1';
+
     -- Fin de simulación
     wait for 1000*T_CLK;
 
@@ -115,7 +123,7 @@ begin
 		dato    => dato,
 		SDO     => SDO,
                 ena_rd  => ena_rd,
-                data_rd => data_rd,
+                reg_SDO => data_rd,
 		nCS     => nCS,
 		SPC     => SPC,
 		SDI     => SDI,
@@ -128,21 +136,6 @@ begin
                 SPC => SPC,
                 SDI => SDI,
                 SDO => SDO);
-
-
-  monitores:
-       entity work.monitor_spi_tb(test)
-       port map(clk     => clk,
-                nRst    => nRst,
-                ini     => ena,
-		dato    => dato,
-		SDO     => SDO,
-                ena_rd  => ena_rd,
-                data_rd => data_rd,
-		nCS     => nCS,
-		SPC     => SPC,
-		SDI     => SDI,
-                fin_tx  => fin_tx);
 
 end test;
 
