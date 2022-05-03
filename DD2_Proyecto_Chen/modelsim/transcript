@@ -122,3 +122,5 @@ run -all
 #    Time: 58030 ns  Iteration: 0  Process: /master_spi_tb/line__44 File: C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd
 # Break in Process line__44 at C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd line 147
 # Compile of master_spi.vhd was successful.
+# End time: 17:05:35 on May 03,2022, Elapsed time: 2:11:29
+# Errors: 1, Warnings: 2
