@@ -8,16 +8,19 @@ end entity;
 architecture test of master_spi_tb is
   signal clk:     std_logic;
   signal nRst:    std_logic;
-  signal ena:     std_logic;                     -- inicio de transacción
-  signal dato:    std_logic_vector(15 downto 0); -- byte de dato introducido
-  signal SDO:     std_logic;                     -- Slave Data Output (Master input)
-  signal ena_rd:  std_logic;                     -- habilitación de lectura
-  signal data_rd: std_logic_vector(7 downto 0);  -- byte de SDO, entregado por slave
+
+  signal ena:     std_logic;                     -- Inicio de transmision
+  signal dato:    std_logic_vector(15 downto 0); -- Byte de dato introducido
+
+  signal ena_rd:  std_logic;                     -- Habilitación de lectura
+  signal data_rd: std_logic_vector(7 downto 0);  -- Registro de lectura
+  signal fin_tx:  std_logic;                     -- Fin de la transmision
+
   signal nCS:     std_logic;                     -- Chip Selection
-  signal SPC:     std_logic;                     -- clock SPI (5 MHz) 
+  signal SPC:     std_logic;                     -- Clock SPI (5 MHz) 
   signal SDI:     std_logic;                     -- Slave Data input  (connected to Master SDO)
-  
-  signal fin_tx:  std_logic;
+  signal SDO:     std_logic;                     -- Slave Data Output (Master input)
+
   signal pos_X:   std_logic_vector(1 downto 0);
   signal pos_Y:   std_logic_vector(1 downto 0);
 
@@ -39,7 +42,9 @@ begin
 
   process
   begin
-    -- Reset
+    -----------------------------------------------------
+    --                      RESET                      --
+    -----------------------------------------------------
     wait until clk'event and clk = '1';
     wait until clk'event and clk = '1';
     nRst <= '0';
@@ -56,57 +61,84 @@ begin
     wait for 10*T_CLK;
     wait until clk'event and clk = '1';
 
-    -- Comprobacion de escritura del master-spi
+    -----------------------------------------------------
+    --    Comprobacion de escritura del master-spi     --
+    -----------------------------------------------------
+    -- Dato: 0
     dato <= (others => '0');
     ena <= '1';
     wait until clk'event and clk = '1';
     ena <= '0';
-    wait until clk'event and clk = '1' and fin_tx = '1';
 
-    dato <= "0101010101010101";
+    wait until clk'event and clk = '1' and fin_tx = '1';    -- Esperar a que se termine la tx
+    wait until clk'event and clk = '1';
+    wait until clk'event and clk = '1';
+
+    -- Dato: alternar 1 y 0
+    dato <= "0101010101010101";                         
     ena <= '1';
     wait until clk'event and clk = '1';
     ena <= '0';
-    wait until clk'event and clk = '1' and fin_tx = '1';
 
+    wait until clk'event and clk = '1' and fin_tx = '1';
+    wait until clk'event and clk = '1';
+    wait until clk'event and clk = '1';
+
+    -- Dato: Configuracion registro 4
     dato <= "0101011110000000";
     ena <= '1';
     wait until clk'event and clk = '1';
     ena <= '0';
-    wait until clk'event and clk = '1' and fin_tx = '1';
 
+    wait until clk'event and clk = '1' and fin_tx = '1';
+    wait until clk'event and clk = '1';
+    wait until clk'event and clk = '1';
+
+    -- Dato: configuracion registro 1
     dato <= "0101010001100011";
     ena <= '1';
     wait until clk'event and clk = '1';
     ena <= '0';
     wait until clk'event and clk = '1' and fin_tx = '1';
 
-    -- Esperamos 500 ciclos de reloj
-    wait for 500*T_CLK;
+    -- Esperamos 50 ciclos de reloj
+    wait for 50*T_CLK;
     wait until clk'event and clk = '1';
 
 
 
-
-
-    -- Comprobacion de lectura del master-spi
+    -----------------------------------------------------
+    --     Comprobacion de lectura del master-spi      --
+    -----------------------------------------------------
+    -- Dato: FFFF
     dato <= (others => '1');
     ena <= '1';
     wait until clk'event and clk = '1';
     ena <= '0';
-    wait until clk'event and clk = '1' and fin_tx = '1';
 
+    wait until clk'event and clk = '1' and fin_tx = '1';
+    wait until clk'event and clk = '1';
+    wait until clk'event and clk = '1';
+
+    -- Dato: 1 y 0 alternando
     dato <= "1010101010101010";
     ena <= '1';
     wait until clk'event and clk = '1';
     ena <= '0';
-    wait until clk'event and clk = '1' and fin_tx = '1';
 
+    wait until clk'event and clk = '1' and fin_tx = '1';
+    wait until clk'event and clk = '1';
+    wait until clk'event and clk = '1';
+
+    -- Dato: pedir lectura bytes
     dato <= "1101110011110000";
     ena <= '1';
     wait until clk'event and clk = '1';
     ena <= '0';
+
     wait until clk'event and clk = '1' and fin_tx = '1';
+    wait until clk'event and clk = '1';
+    wait until clk'event and clk = '1';
 
     -- Fin de simulación
     wait for 1000*T_CLK;

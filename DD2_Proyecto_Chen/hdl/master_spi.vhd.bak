@@ -156,7 +156,7 @@ begin
       if ini= '1' then
         reg_SDI <= dato;
 
-      elsif ena_SDI = '1' and (not (cnt_byte = 1 and cnt_bit = 0)) then -- Si se habilita la salida y no es el primer bit
+      elsif ena_SDI = '1' and (not (cnt_byte = 1 and cnt_bit = 0)) then 
         reg_SDI <= reg_SDI(14 downto 0) & '0';
 
       end if;
