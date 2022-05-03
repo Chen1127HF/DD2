@@ -71,7 +71,8 @@ begin
     ena <= '0';
 
     wait until clk'event and clk = '1' and fin_tx = '1';    -- Esperar a que se termine la tx
-
+    wait until clk'event and clk = '1';
+    wait until clk'event and clk = '1';
 
     -- Dato: alternar 1 y 0
     dato <= "0101010101010101";                         

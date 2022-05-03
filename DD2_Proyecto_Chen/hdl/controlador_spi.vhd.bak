@@ -89,8 +89,6 @@ begin
           if ena_5ms = '1' then
             ini_tx <= '1';
             dato <= "1101110011110000";
-          else
-            ini_tx <= '0';
           end if;
       end case;
     end if;

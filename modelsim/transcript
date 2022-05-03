@@ -1,0 +1,47 @@
+# Errors: 0, Warnings: 0
+# Compile of auxiliar.vhd was successful.
+# Errors: 0, Warnings: 0
+# Compile of calc_offset.vhd was successful.
+# Errors: 1, Warnings: 0
+# Errors: 0, Warnings: 0
+# Compile of estimador.vhd was successful.
+# Errors: 0, Warnings: 0
+# Compile of master_spi.vhd was successful.
+# Errors: 0, Warnings: 0
+# Compile of agente_spi.vhd was successful.
+# Errors: 0, Warnings: 0
+# Compile of master_spi_tb.vhd was successful.
+# Errors: 1, Warnings: 0
+# Errors: 1, Warnings: 0
+# Compile of controlador_spi.vhd failed.
+# Errors: 0, Warnings: 0
+# Compile of auxiliar.vhd was successful.
+# Errors: 0, Warnings: 0
+# Compile of calc_offset.vhd was successful.
+# Errors: 0, Warnings: 0
+# Compile of estimador.vhd was successful.
+# Errors: 0, Warnings: 0
+# Compile of master_spi.vhd was successful.
+# Errors: 0, Warnings: 0
+# Compile of agente_spi.vhd was successful.
+# Errors: 0, Warnings: 0
+# Compile of master_spi_tb.vhd was successful.
+# Errors: 1, Warnings: 0
+# Errors: 1, Warnings: 0
+# Errors: 1, Warnings: 0
+# Compile of controlador_spi.vhd failed.
+# Compile of controlador_spi.vhd failed with 3 errors.
+# Compile of controlador_spi.vhd failed with 3 errors.
+# Compile of controlador_spi.vhd failed with 2 errors.
+# Compile of controlador_spi.vhd was successful.
+# Compile of controlador_spi.vhd failed with 5 errors.
+# Compile of controlador_spi.vhd failed with 3 errors.
+# Compile of controlador_spi.vhd failed with 1 errors.
+# Compile of controlador_spi.vhd was successful.
+# Compile of controlador_spi.vhd was successful.
+# Compile of controlador_spi.vhd was successful.
+# Compile of controlador_spi.vhd failed with 1 errors.
+# Compile of controlador_spi.vhd was successful.
+# Compile of controlador_spi.vhd failed with 5 errors.
+# Compile of controlador_spi.vhd was successful.
+# Compile of controlador_spi.vhd was successful.
