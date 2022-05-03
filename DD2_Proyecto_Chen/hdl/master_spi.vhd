@@ -5,21 +5,21 @@ use ieee.std_logic_unsigned.all;
 entity master_spi is
 port(clk:           in     std_logic;
      nRst:          in     std_logic;
-     ini:           in     std_logic;                     -- inicio de transacción
-     dato:          in     std_logic_vector(15 downto 0); -- byte de dato introducido
+     ini:           in     std_logic;                     -- Inicio de transmision
+     dato:          in     std_logic_vector(15 downto 0); -- Byte de dato introducido
      SDO:           in     std_logic;                     -- Slave Data Output (Master input)
-     ena_rd:        buffer std_logic;                     -- habilitación de lectura
-     reg_SDO:       buffer std_logic_vector(7 downto 0);  -- byte de SDO, entregado por slave
+     ena_rd:        buffer std_logic;                     -- Habilitación de lectura
+     reg_SDO:       buffer std_logic_vector(7 downto 0);  -- Byte de SDO, entregado por slave
      nCS:           buffer std_logic;                     -- Chip Selection
-     SPC:           buffer std_logic;                     -- clock SPI (5 MHz) 
+     SPC:           buffer std_logic;                     -- Clock SPI (5 MHz) 
      SDI:           buffer std_logic;                     -- Slave Data input  (connected to Master SDO)
-     fin_tx:        buffer std_logic                      -- No hace falta pero creo que queda mejor
+     fin_tx:        buffer std_logic                      -- Indica el final de la transmision
     );
 end entity;
 
 architecture rtl of master_spi is
   -- Divisor de frecuencias
-  signal cnt_div:       std_logic_vector(3 downto 0); -- Le sobrabran bytes
+  signal cnt_div:       std_logic_vector(3 downto 0); 
 
   
   -- Cuenta para generacion de SPC y salidas
@@ -33,7 +33,6 @@ architecture rtl of master_spi is
   signal cnt_byte: std_logic_vector(2 downto 0);
   signal ena_bit:  std_logic;
 
-  signal ini_T1: std_logic;
 
   -- Registros
   signal reg_SDI: std_logic_vector(15 downto 0);
@@ -128,8 +127,7 @@ begin
   begin
     if nRst = '0' then
       reg_SDO <= (others =>'0');
-    elsif clk'event and clk = '1' then            
-         
+    elsif clk'event and clk = '1' then
       if ena_SDO = '1' then    
         reg_SDO <= reg_SDO(6 downto 0) & SDO;   -- Se desplaza el registro de entrada
 
@@ -150,10 +148,9 @@ begin
   begin
     if nRst = '0' then
       reg_SDI <= (others => '0');
-      ini_T1 <= '0';
     elsif clk'event and clk = '1' then 
         
-      if ini= '1' then
+      if ini = '1' then
         reg_SDI <= dato;
 
       elsif ena_SDI = '1' and (not (cnt_byte = 1 and cnt_bit = 0)) then -- Si se habilita la salida y no es el primer bit

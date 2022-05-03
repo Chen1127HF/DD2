@@ -1,18 +1,7 @@
 # Compile of master_spi.vhd was successful.
-# Compile of master_spi_tb.vhd failed with 3 errors.
-# Compile of agente_spi.vhd was successful.
-# Compile of auxiliar.vhd was successful.
-# Compile of calc_offset.vhd was successful.
-# Compile of estimador.vhd was successful.
-# Compile of master_spi.vhd was successful.
-# 6 compiles, 2 failed with 3 errors.
-# Compile of master_spi_tb.vhd was successful.
-# Compile of master_spi_tb.vhd was successful.
-# Compile of master_spi.vhd was successful.
-# Compile of master_spi.vhd was successful.
 vsim work.master_spi_tb
 # vsim work.master_spi_tb 
-# Start time: 14:54:06 on May 03,2022
+# Start time: 20:25:38 on May 03,2022
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
@@ -21,106 +10,42 @@ vsim work.master_spi_tb
 # Loading work.master_spi_tb(test)
 # Loading work.master_spi(rtl)
 # Loading work.agente_spi(sim)
-add wave -position insertpoint  \
-sim:/master_spi_tb/clk \
-sim:/master_spi_tb/nRst \
-sim:/master_spi_tb/ena \
-sim:/master_spi_tb/dato \
-sim:/master_spi_tb/ena_rd \
-sim:/master_spi_tb/data_rd \
-sim:/master_spi_tb/fin_tx \
-sim:/master_spi_tb/nCS \
-sim:/master_spi_tb/SPC \
-sim:/master_spi_tb/SDI \
-sim:/master_spi_tb/SDO
+add wave -position insertpoint sim:/master_spi_tb/dut/*
 # ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
 #           File in use by: isabe  Hostname: DESKTOP-QNP6GEG  ProcessID: 7832
-#           Attempting to use alternate WLF file "./wlftq01wew".
+#           Attempting to use alternate WLF file "./wlft5z8cf5".
 # ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
-#           Using alternate file: ./wlftq01wew
-add wave -position insertpoint  \
-sim:/master_spi_tb/dut/clk \
-sim:/master_spi_tb/dut/ini \
-sim:/master_spi_tb/dut/dato \
-sim:/master_spi_tb/dut/SDO \
-sim:/master_spi_tb/dut/ena_rd \
-sim:/master_spi_tb/dut/reg_SDO \
-sim:/master_spi_tb/dut/nCS \
-sim:/master_spi_tb/dut/SPC \
-sim:/master_spi_tb/dut/SDI \
-sim:/master_spi_tb/dut/fin_tx \
-sim:/master_spi_tb/dut/cnt_div \
-sim:/master_spi_tb/dut/cnt_bit \
-sim:/master_spi_tb/dut/cnt_byte \
-sim:/master_spi_tb/dut/ena_bit \
-sim:/master_spi_tb/dut/ini_T1 \
-sim:/master_spi_tb/dut/reg_SDI
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-run -all
-# ** Failure: done
-#    Time: 58030 ns  Iteration: 0  Process: /master_spi_tb/line__44 File: C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd
-# Break in Process line__44 at C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd line 147
-# Can't move the Now cursor.
-# Compile of master_spi.vhd was successful.
-# Compile of master_spi.vhd was successful.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.master_spi(rtl)
+#           Using alternate file: ./wlft5z8cf5
 run -all
 # ** Failure: done
 #    Time: 58030 ns  Iteration: 0  Process: /master_spi_tb/line__44 File: C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd
 # Break in Process line__44 at C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd line 147
 add wave -position insertpoint  \
-sim:/master_spi_tb/dut/ena_SDI
+sim:/master_spi_tb/agente/estado \
+sim:/master_spi_tb/agente/reg_comandos \
+sim:/master_spi_tb/agente/reg_lecturas
 restart
 # ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
 run -all
 # ** Failure: done
 #    Time: 58030 ns  Iteration: 0  Process: /master_spi_tb/line__44 File: C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd
 # Break in Process line__44 at C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd line 147
+# WARNING: No extended dataflow license exists
+# Compile of master_spi_tb.vhd was successful.
 restart
 # ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Compile of master_spi.vhd was successful.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.master_spi(rtl)
+# Loading work.master_spi_tb(test)
 run -all
 # ** Failure: done
-#    Time: 58030 ns  Iteration: 0  Process: /master_spi_tb/line__44 File: C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd
-# Break in Process line__44 at C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd line 147
+#    Time: 57990 ns  Iteration: 0  Process: /master_spi_tb/line__44 File: C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd
+# Break in Process line__44 at C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd line 146
+# Compile of master_spi_tb.vhd was successful.
+# Compile of master_spi_tb.vhd was successful.
+# Compile of agente_spi.vhd was successful.
+# Compile of auxiliar.vhd was successful.
+# Compile of calc_offset.vhd was successful.
+# Compile of estimador.vhd was successful.
 # Compile of master_spi.vhd was successful.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.master_spi(rtl)
-run -all
-# ** Failure: done
-#    Time: 58030 ns  Iteration: 0  Process: /master_spi_tb/line__44 File: C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd
-# Break in Process line__44 at C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd line 147
-# Compile of master_spi.vhd was successful.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.master_spi(rtl)
-run -all
-# ** Failure: done
-#    Time: 58030 ns  Iteration: 0  Process: /master_spi_tb/line__44 File: C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd
-# Break in Process line__44 at C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd line 147
-# Compile of master_spi.vhd was successful.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.master_spi(rtl)
-run -all
-# ** Failure: done
-#    Time: 58030 ns  Iteration: 0  Process: /master_spi_tb/line__44 File: C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd
-# Break in Process line__44 at C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd line 147
-# Compile of master_spi.vhd was successful.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.master_spi(rtl)
-run -all
-# ** Failure: done
-#    Time: 58030 ns  Iteration: 0  Process: /master_spi_tb/line__44 File: C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd
-# Break in Process line__44 at C:/Users/isabe/Documents/GitHub/DD2/DD2_Proyecto_Chen/hdl/master_spi_tb.vhd line 147
-# Compile of master_spi.vhd was successful.
-# End time: 17:05:35 on May 03,2022, Elapsed time: 2:11:29
-# Errors: 1, Warnings: 2
+# 6 compiles, 0 failed with no errors.
+# End time: 20:45:40 on May 03,2022, Elapsed time: 0:20:02
+# Errors: 1, Warnings: 3
