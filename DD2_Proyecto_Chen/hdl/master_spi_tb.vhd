@@ -14,12 +14,14 @@ architecture test of master_spi_tb is
 
   signal ena_rd:  std_logic;                     -- Habilitación de lectura
   signal data_rd: std_logic_vector(7 downto 0);  -- Registro de lectura
-  signal fin_tx:  std_logic;                     -- Fin de la transmision
+  signal libre:   std_logic;                     -- Indica si el bus esta disponible para una transmision
 
   signal nCS:     std_logic;                     -- Chip Selection
   signal SPC:     std_logic;                     -- Clock SPI (5 MHz) 
   signal SDI:     std_logic;                     -- Slave Data input  (connected to Master SDO)
   signal SDO:     std_logic;                     -- Slave Data Output (Master input)
+
+  signal fin_tx:  std_logic;
 
   signal pos_X:   std_logic_vector(1 downto 0);
   signal pos_Y:   std_logic_vector(1 downto 0);
@@ -70,7 +72,7 @@ begin
     wait until clk'event and clk = '1';
     ena <= '0';
 
-    wait until clk'event and clk = '1' and fin_tx = '1';    -- Esperar a que se termine la tx
+    wait until clk'event and clk = '1' and nCs = '1';    -- Esperar a que se termine la tx
     wait until clk'event and clk = '1';
     wait until clk'event and clk = '1';
 
@@ -80,7 +82,7 @@ begin
     wait until clk'event and clk = '1';
     ena <= '0';
 
-    wait until clk'event and clk = '1' and fin_tx = '1';
+    wait until clk'event and clk = '1' and nCs = '1';
     wait until clk'event and clk = '1';
     wait until clk'event and clk = '1';
 
@@ -90,7 +92,7 @@ begin
     wait until clk'event and clk = '1';
     ena <= '0';
 
-    wait until clk'event and clk = '1' and fin_tx = '1';
+    wait until clk'event and clk = '1' and nCs = '1';
     wait until clk'event and clk = '1';
     wait until clk'event and clk = '1';
 
@@ -99,7 +101,7 @@ begin
     ena <= '1';
     wait until clk'event and clk = '1';
     ena <= '0';
-    wait until clk'event and clk = '1' and fin_tx = '1';
+    wait until clk'event and clk = '1' and nCs = '1';
 
     -- Esperamos 50 ciclos de reloj
     wait for 50*T_CLK;
@@ -116,7 +118,7 @@ begin
     wait until clk'event and clk = '1';
     ena <= '0';
 
-    wait until clk'event and clk = '1' and fin_tx = '1';
+    wait until clk'event and clk = '1' and libre = '1';
     wait until clk'event and clk = '1';
     wait until clk'event and clk = '1';
 
@@ -126,7 +128,7 @@ begin
     wait until clk'event and clk = '1';
     ena <= '0';
 
-    wait until clk'event and clk = '1' and fin_tx = '1';
+    wait until clk'event and clk = '1' and libre = '1';
     wait until clk'event and clk = '1';
     wait until clk'event and clk = '1';
 
@@ -136,7 +138,7 @@ begin
     wait until clk'event and clk = '1';
     ena <= '0';
 
-    wait until clk'event and clk = '1' and fin_tx = '1';
+    wait until clk'event and clk = '1' and libre = '1';
     wait until clk'event and clk = '1';
     wait until clk'event and clk = '1';
 

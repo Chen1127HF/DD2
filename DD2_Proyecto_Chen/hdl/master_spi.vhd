@@ -3,18 +3,18 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 
 entity master_spi is
-port(clk:           in     std_logic;
-     nRst:          in     std_logic;
-     ini:           in     std_logic;                     -- Inicio de transmision
-     dato:          in     std_logic_vector(15 downto 0); -- Byte de dato introducido
-     SDO:           in     std_logic;                     -- Slave Data Output (Master input)
-     ena_rd:        buffer std_logic;                     -- Habilitación de lectura
-     reg_SDO:       buffer std_logic_vector(7 downto 0);  -- Byte de SDO, entregado por slave
-     nCS:           buffer std_logic;                     -- Chip Selection
-     SPC:           buffer std_logic;                     -- Clock SPI (5 MHz) 
-     SDI:           buffer std_logic;                     -- Slave Data input  (connected to Master SDO)
-     fin_tx:        buffer std_logic                      -- Indica el final de la transmision
-    );
+port(clk:     in     std_logic;
+     nRst:    in     std_logic;
+     ini:     in     std_logic;                     -- Inicio de transmision
+     dato:    in     std_logic_vector(15 downto 0); -- Byte de dato introducido
+     SDO:     in     std_logic;                     -- Slave Data Output (Master input)
+     ena_rd:  buffer std_logic;                     -- Habilitación de lectura
+     reg_SDO: buffer std_logic_vector(7 downto 0);  -- Byte de SDO, entregado por slave
+     nCS:     buffer std_logic;                     -- Chip Selection
+     SPC:     buffer std_logic;                     -- Clock SPI (5 MHz) 
+     SDI:     buffer std_logic;                     -- Slave Data input  (connected to Master SDO)
+     fin_tx:  buffer std_logic 
+     );
 end entity;
 
 architecture rtl of master_spi is
