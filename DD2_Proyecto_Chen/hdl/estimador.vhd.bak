@@ -76,7 +76,7 @@ begin
 
 
   -- Valor medio de las ultimas N muestras
-  X_media <= X_media_N(11+ ceil_log(N) downto ceil_log(N));-- A completar por el estudiante
-  Y_media <= Y_media_N(11+ ceil_log(N) downto ceil_log(N));-- A completar por el estudiante
+  X_media <= X_media_N(11+ ceil_log(N) downto ceil_log(N))-- A completar por el estudiante
+  Y_media <= Y_media_N(11+ ceil_log(N) downto ceil_log(N))-- A completar por el estudiante
 
 end architecture;

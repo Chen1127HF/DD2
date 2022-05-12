@@ -1,0 +1,101 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_unsigned.all;
+
+entity calc_offset_tb is
+end entity;
+
+architecture test of calc_offset_tb is
+  signal clk:     std_logic;
+  signal nRst:    std_logic;
+  signal ena_rd:      std_logic;
+  signal dato_rd:     std_logic_vector(7 downto 0);
+  signal X_out_bias:  std_logic_vector(10 downto 0);
+  signal Y_out_bias:  std_logic_vector(10 downto 0);
+  signal muestra_bias_rdy: std_logic;
+	
+  constant T_CLK: 	time:= 20 ns;
+  constant T_CLK5:	time:= 200 ns;
+
+begin
+
+  -- Reloj de 20 ns (50 MHz)
+  process
+  begin
+    clk <= '0';
+    wait for T_CLK/2;
+    clk <= '1';
+    wait for T_CLK/2;
+  end process;
+
+  process
+  begin
+    -----------------------------------------------------
+    --                      RESET                      --
+    -----------------------------------------------------
+    wait until clk'event and clk = '1';
+    wait until clk'event and clk = '1';
+    nRst <= '0';
+
+    wait until clk'event and clk = '1';
+    wait until clk'event and clk = '1';
+    nRst <= '1';
+
+    -- Inicializacion entradas
+    -- Primer dato x
+    ena_rd <= '0';
+    dato_rd <= "00000000";
+    wait until clk'event and clk = '1';
+    ena_rd <= '1';
+    wait until clk'event and clk = '1';
+
+    -- Segundo dato x
+    ena_rd <= '0';
+    dato_rd <= "00000000";
+    wait until clk'event and clk = '1';
+    ena_rd <= '1';
+    wait until clk'event and clk = '1';
+
+    -- Primer dato y
+    ena_rd <= '0';
+    dato_rd <= "00000000";
+    wait until clk'event and clk = '1';
+    ena_rd <= '1';
+    wait until clk'event and clk = '1';
+
+    -- Segundo dato y
+    ena_rd <= '0';
+    dato_rd <= "00000000";
+    wait until clk'event and clk = '1';
+    ena_rd <= '1';
+    wait until clk'event and clk = '1';
+    ena_rd <= '0';
+
+    -- Esperamos 10 ciclos de reloj
+    wait for 10*T_CLK;
+    wait until clk'event and clk = '1';
+    
+
+    wait for 100000*T_CLK;
+
+    assert false
+    report "done"
+    severity failure;
+  end process;
+
+  calc_offset: 
+       entity work.calc_offset(rtl)
+       port map(clk     => clk,
+                nRst    => nRst,
+                ena_rd  => ena_rd,
+		dato_rd => dato_rd,
+                X_out_bias  => X_out_bias,
+		Y_out_bias   => Y_out_bias,
+                muestra_bias_rdy    => muestra_bias_rdy);
+
+  
+
+end test;
+
+
+

@@ -21,19 +21,22 @@ port(nRst:             in     std_logic;
 end entity;
 
 architecture rtl of calc_offset is
-  signal cnt_rd:          std_logic_vector(2+ceil_log(N) downto 0);
-  signal ena_calc:        std_logic;
-  signal offset_rdy:      std_logic;
 
-  signal muestra_X:       std_logic_vector(9 downto 0); 
-  signal muestra_Y:       std_logic_vector(9 downto 0); 
+  -- cnt_rd 8 bits. cnt_rd(8) controla offset_rdy (por tanto, X_out_bias y Y_out_bias)
+  -- cnt_rd(1 downto 0) controla la captura de valores de muestra, 0 y 1 para X, 2 y 3 para Y
+  signal cnt_rd:          std_logic_vector(2+ceil_log(N) downto 0);     -- 8 bits, es decir, 7 downto 0
+  signal ena_calc:        std_logic;                                    -- habilita la acumulación, '1' si ena_rd '1', cnt_rd "11" y offset_rdy '0',  '0' si enard '0'
+  signal offset_rdy:      std_logic;                                    -- cnt_rd(8), bit más significativo de cnt_rd
+
+  signal muestra_X:       std_logic_vector(9 downto 0);                 -- valor de muestra capturado para X 
+  signal muestra_Y:       std_logic_vector(9 downto 0);                 -- valor de muestra capturado para Y 
 
   signal offset_X:        std_logic_vector(10 downto 0); 
   signal offset_Y:        std_logic_vector(10 downto 0); 
  
-  signal acum_X:          std_logic_vector(9+ceil_log(N) downto 0); 
-  signal acum_Y:          std_logic_vector(9+ceil_log(N) downto 0); 
-  signal acum_Z:          std_logic_vector(9+ceil_log(N) downto 0); 
+  signal acum_X:          std_logic_vector(9+ceil_log(N) downto 0);     -- valor acumulado de X, 14 downto 0
+  signal acum_Y:          std_logic_vector(9+ceil_log(N) downto 0);     -- valor acumulado de Y, 14 downto 0
+  signal acum_Z:          std_logic_vector(9+ceil_log(N) downto 0);     -- valor acumulado de Z, 14 downto 0
 
 begin
   -- Contador de lecturas
@@ -106,8 +109,8 @@ begin
     end if;
   end process;
 
-  offset_X <= acum_X(9+ceil_log(N))&acum_X(9+ceil_log(N) downto ceil_log(N));
-  offset_Y <= acum_Y(9+ceil_log(N))&acum_Y(9+ceil_log(N) downto ceil_log(N));
+  offset_X <= acum_X(9+ceil_log(N))&acum_X(9+ceil_log(N) downto ceil_log(N));  -- bit 14 & bit(14 downto 5)
+  offset_Y <= acum_Y(9+ceil_log(N))&acum_Y(9+ceil_log(N) downto ceil_log(N));  -- bit 14 & bit(14 downto 5)
 
   X_out_bias <=  offset_X        when offset_rdy = '1' else  -- A completar por el estudiante
                 (others => '0');

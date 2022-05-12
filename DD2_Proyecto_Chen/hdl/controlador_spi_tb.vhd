@@ -28,6 +28,13 @@ architecture test of controlador_spi_tb is
   signal pos_X:   std_logic_vector(1 downto 0);
   signal pos_Y:   std_logic_vector(1 downto 0);
 
+  signal X_out_bias:  std_logic_vector(10 downto 0);
+  signal Y_out_bias:  std_logic_vector(10 downto 0);
+  signal muestra_bias_rdy: std_logic;
+
+  signal X_media:  std_logic_vector(11 downto 0);
+  signal Y_media:  std_logic_vector(11 downto 0);
+
   signal tic_200ns:	std_logic;
 	
   constant T_CLK: 	time:= 20 ns;
@@ -111,6 +118,25 @@ begin
                 SPC => SPC,
                 SDI => SDI,
                 SDO => SDO);
+  calc_offset: 
+       entity work.calc_offset(rtl)
+       port map(clk     => clk,
+                nRst    => nRst,
+                ena_rd  => ena_rd,
+		dato_rd => data_rd,
+                X_out_bias  => X_out_bias,
+		Y_out_bias   => Y_out_bias,
+                muestra_bias_rdy    => muestra_bias_rdy);
+
+  estimador: 
+       entity work.estimador(rtl)
+       port map(clk     => clk,
+                nRst    => nRst,
+                X_out_bias  => X_out_bias,
+		Y_out_bias   => Y_out_bias,
+                muestra_bias_rdy    => muestra_bias_rdy,
+                X_media    => X_media,
+                Y_media    => Y_media);
 
 end test;
 
