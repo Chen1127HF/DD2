@@ -35,6 +35,10 @@ architecture test of controlador_spi_tb is
   signal X_media:  std_logic_vector(11 downto 0);
   signal Y_media:  std_logic_vector(11 downto 0);
 
+  signal mux_disp:   std_logic_vector(7 downto 0);
+  signal disp:   std_logic_vector(7 downto 0);
+  signal leds: std_logic_vector(7 downto 0);
+
   signal tic_200ns:	std_logic;
 	
   constant T_CLK: 	time:= 20 ns;
@@ -137,6 +141,18 @@ begin
                 muestra_bias_rdy    => muestra_bias_rdy,
                 X_media    => X_media,
                 Y_media    => Y_media);
+
+  cuantificador:
+       entity work.cuantificador(rtl)
+       port map(clk     => clk,
+                nRst    => nRst,
+                X_media => X_media,
+                Y_media => Y_media,
+                ena     => muestra_bias_rdy,
+                mux_disp=> mux_disp,
+		disp    => disp,
+                leds    => leds);
+
 
 end test;
 

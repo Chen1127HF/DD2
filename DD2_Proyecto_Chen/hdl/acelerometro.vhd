@@ -1,15 +1,18 @@
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
-
-entity controlador_spi_tb is
+ 
+entity acelerometro is
+port(clk:      in     std_logic;
+     nRst:     in     std_logic;
+     ena_op:   in     std_logic;
+     mux_disp: buffer std_logic_vector(7 downto 0);
+     disp:     buffer std_logic_vector(7 downto 0);
+     leds:     buffer std_logic_vector(7 downto 0));
 end entity;
 
-architecture test of controlador_spi_tb is
-  signal clk:     std_logic;
-  signal nRst:    std_logic;
-
-  signal ena:     std_logic;                     -- Inicio de transmision
+architecture estructural of acelerometro is
+                     
   signal dato:    std_logic_vector(15 downto 0); -- Byte de dato introducido
 
   signal ena_rd:  std_logic;                     -- Habilitación de lectura
@@ -23,7 +26,7 @@ architecture test of controlador_spi_tb is
 
   signal fin_tx:  std_logic;
 
-  signal ena_op:  std_logic;
+  signal ena:  std_logic;
 
   signal pos_X:   std_logic_vector(1 downto 0);
   signal pos_Y:   std_logic_vector(1 downto 0);
@@ -35,61 +38,12 @@ architecture test of controlador_spi_tb is
   signal X_media:  std_logic_vector(11 downto 0);
   signal Y_media:  std_logic_vector(11 downto 0);
 
-  signal mux_disp:   std_logic_vector(7 downto 0);
-  signal disp:   std_logic_vector(7 downto 0);
-  signal leds: std_logic_vector(7 downto 0);
+
 
   signal tic_200ns:	std_logic;
-	
-  constant T_CLK: 	time:= 20 ns;
-  constant T_CLK5:	time:= 200 ns;
 
 begin
-
-  -- Reloj de 20 ns (50 MHz)
-  process
-  begin
-    clk <= '0';
-    wait for T_CLK/2;
-    clk <= '1';
-    wait for T_CLK/2;
-  end process;
-
-  process
-  begin
-    -----------------------------------------------------
-    --                      RESET                      --
-    -----------------------------------------------------
-    wait until clk'event and clk = '1';
-    wait until clk'event and clk = '1';
-    nRst <= '0';
-
-    wait until clk'event and clk = '1';
-    wait until clk'event and clk = '1';
-    nRst <= '1';
-
-    -- Inicializacion entradas
-    ena_op <= '0';
-
-    -- Esperamos 10 ciclos de reloj
-    wait for 10*T_CLK;
-    wait until clk'event and clk = '1';
-
-
-    -- Fin de simulación
-
-    ena_op <= '1';
-    wait until clk'event and clk = '1';
-    ena_op <= '0';
-
-    wait for 100000*T_CLK;
-
-    assert false
-    report "done"
-    severity failure;
-  end process;
-
-  controlador: 
+   controlador: 
        entity work.controlador_spi(rtl)
        port map(clk     => clk,
                 nRst    => nRst,
@@ -147,14 +101,10 @@ begin
        port map(clk     => clk,
                 nRst    => nRst,
                 X_media => X_media,
-                Y_media => Y_media),
+                Y_media => Y_media,
                 ena     => muestra_bias_rdy,
                 mux_disp=> mux_disp,
 		disp    => disp,
                 leds    => leds);
 
-
-end test;
-
-
-
+end estructural;
