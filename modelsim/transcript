@@ -1,21 +1,187 @@
-# Compile of cuantificador.vhd failed with 1 errors.
+# Compile of agente_spi.vhd was successful.
 # Compile of auxiliar.vhd was successful.
 # Compile of calc_offset.vhd was successful.
+# Compile of controlador_spi.vhd was successful.
+# Compile of controlador_spi_tb.vhd was successful.
 # Compile of estimador.vhd was successful.
 # Compile of master_spi.vhd was successful.
-# Compile of agente_spi.vhd was successful.
 # Compile of master_spi_tb.vhd was successful.
-# Compile of controlador_spi.vhd was successful.
-# Compile of controlador_spi_tb.vhd failed with 2 errors.
-# Compile of cuantificador.vhd was successful with warnings.
-# Compile of calc_offset_tb.vhd was successful.
-# 10 compiles, 1 failed with 2 errors.
-# Compile of controlador_spi_tb.vhd failed with 1 errors.
+vsim work.master_spi_tb
+# vsim work.master_spi_tb 
+# Start time: 12:47:20 on May 09,2022
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading work.master_spi_tb(test)
+# Loading work.master_spi(rtl)
+# Loading work.agente_spi(sim)
+vsim work.controlador_spi_tb
+# End time: 12:48:02 on May 09,2022, Elapsed time: 0:00:42
+# Errors: 0, Warnings: 0
+# vsim work.controlador_spi_tb 
+# Start time: 12:48:02 on May 09,2022
+# Loading std.standard
+# ** Error: (vsim-13) Recompile work.controlador_spi_tb(test) because work.master_spi has changed.
+# 
+# Error loading design
+# End time: 12:48:04 on May 09,2022, Elapsed time: 0:00:02
+# Errors: 1, Warnings: 0
+# Compile of agente_spi.vhd was successful.
 # Compile of controlador_spi_tb.vhd was successful.
-# Compile of cuantificador.vhd was successful with warnings.
+# Compile of master_spi_tb.vhd was successful.
+# 3 compiles, 0 failed with no errors.
+# Compile of agente_spi.vhd was successful.
+# Compile of auxiliar.vhd was successful.
+# Compile of calc_offset.vhd was successful.
+# Compile of controlador_spi.vhd was successful.
+# Compile of controlador_spi_tb.vhd was successful.
+# Compile of estimador.vhd was successful.
+# Compile of master_spi.vhd was successful.
+# Compile of master_spi_tb.vhd was successful.
+vsim work.controlador_spi_tb(test)
+# vsim work.controlador_spi_tb(test) 
+# Start time: 12:48:22 on May 09,2022
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading work.controlador_spi_tb(test)
+# Loading work.controlador_spi(rtl)
+# Loading work.master_spi(rtl)
+# Loading work.agente_spi(sim)
+add wave  \
+sim:/controlador_spi_tb/controlador/clk \
+sim:/controlador_spi_tb/controlador/nRst \
+sim:/controlador_spi_tb/controlador/ena_op \
+sim:/controlador_spi_tb/controlador/ena_rd \
+sim:/controlador_spi_tb/controlador/reg_SDO \
+sim:/controlador_spi_tb/controlador/libre \
+sim:/controlador_spi_tb/controlador/fin_tx \
+sim:/controlador_spi_tb/controlador/ini_tx \
+sim:/controlador_spi_tb/controlador/dato \
+sim:/controlador_spi_tb/controlador/estado \
+sim:/controlador_spi_tb/controlador/cnt_reg \
+sim:/controlador_spi_tb/controlador/cnt_5ms \
+sim:/controlador_spi_tb/controlador/ena_5ms \
+sim:/controlador_spi_tb/controlador/cnt_320ms \
+sim:/controlador_spi_tb/controlador/ena_320ms \
+sim:/controlador_spi_tb/controlador/dato_lectura \
+sim:/controlador_spi_tb/controlador/ena_medida \
+sim:/controlador_spi_tb/controlador/ena_medida_offset \
+sim:/controlador_spi_tb/controlador/fdc_5ms
+add wave  \
+sim:/controlador_spi_tb/master/clk \
+sim:/controlador_spi_tb/master/nRst \
+sim:/controlador_spi_tb/master/ini \
+sim:/controlador_spi_tb/master/dato \
+sim:/controlador_spi_tb/master/SDO \
+sim:/controlador_spi_tb/master/ena_rd \
+sim:/controlador_spi_tb/master/reg_SDO \
+sim:/controlador_spi_tb/master/nCS \
+sim:/controlador_spi_tb/master/SPC \
+sim:/controlador_spi_tb/master/SDI \
+sim:/controlador_spi_tb/master/fin_tx \
+sim:/controlador_spi_tb/master/cnt_div \
+sim:/controlador_spi_tb/master/ena_SDO \
+sim:/controlador_spi_tb/master/ena_SDI \
+sim:/controlador_spi_tb/master/SPC_up \
+sim:/controlador_spi_tb/master/SPC_down \
+sim:/controlador_spi_tb/master/cnt_bit \
+sim:/controlador_spi_tb/master/cnt_byte \
+sim:/controlador_spi_tb/master/ena_bit \
+sim:/controlador_spi_tb/master/reg_SDI \
+sim:/controlador_spi_tb/master/reg_nWR
+add wave  \
+sim:/controlador_spi_tb/agente/pos_X \
+sim:/controlador_spi_tb/agente/pos_Y \
+sim:/controlador_spi_tb/agente/nCS \
+sim:/controlador_spi_tb/agente/SPC \
+sim:/controlador_spi_tb/agente/SDI \
+sim:/controlador_spi_tb/agente/SDO \
+sim:/controlador_spi_tb/agente/estado \
+sim:/controlador_spi_tb/agente/reg_comandos \
+sim:/controlador_spi_tb/agente/reg_lecturas \
+sim:/controlador_spi_tb/agente/cnt_rd_muestras
+run -all
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /controlador_spi_tb/master
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /controlador_spi_tb/master
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /controlador_spi_tb/master
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /controlador_spi_tb/master
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /controlador_spi_tb/controlador
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 0  Instance: /controlador_spi_tb/controlador
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 1  Instance: /controlador_spi_tb/master
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 1  Instance: /controlador_spi_tb/master
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 0 ps  Iteration: 1  Instance: /controlador_spi_tb/master
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 10 ns  Iteration: 1  Instance: /controlador_spi_tb/master
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 10 ns  Iteration: 1  Instance: /controlador_spi_tb/master
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 10 ns  Iteration: 1  Instance: /controlador_spi_tb/master
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 10 ns  Iteration: 1  Instance: /controlador_spi_tb/master
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 10 ns  Iteration: 2  Instance: /controlador_spi_tb/master
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 30 ns  Iteration: 1  Instance: /controlador_spi_tb/master
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 30 ns  Iteration: 1  Instance: /controlador_spi_tb/master
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 30 ns  Iteration: 1  Instance: /controlador_spi_tb/master
+# ** Warning: There is an 'U'|'X'|'W'|'Z'|'-' in an arithmetic operand, the result will be 'X'(es).
+#    Time: 30 ns  Iteration: 1  Instance: /controlador_spi_tb/master
+# ** Failure: done
+#    Time: 2000290 ns  Iteration: 0  Process: /controlador_spi_tb/line__48 File: C:/Users/haofan.chen/Downloads/DD2_Proyecto_Chen/hdl/controlador_spi_tb.vhd
+# Break in Process line__48 at C:/Users/haofan.chen/Downloads/DD2_Proyecto_Chen/hdl/controlador_spi_tb.vhd line 77
+# Compile of agente_spi.vhd was successful.
+# Compile of auxiliar.vhd was successful.
+# Compile of calc_offset.vhd was successful.
+# Compile of controlador_spi.vhd was successful.
+# Compile of controlador_spi_tb.vhd was successful.
+# Compile of master_spi.vhd was successful.
+# Compile of master_spi_tb.vhd was successful.
+# Compile of estimador.vhd failed.
+# Compile of cuantificador.vhd failed.
+# Compile of agente_spi.vhd was successful.
+# Compile of auxiliar.vhd was successful.
+# Compile of calc_offset.vhd was successful.
+# Compile of controlador_spi.vhd was successful.
+# Compile of controlador_spi_tb.vhd was successful.
+# Compile of master_spi.vhd was successful.
+# Compile of master_spi_tb.vhd was successful.
+# Compile of estimador.vhd failed.
+# Compile of cuantificador.vhd failed.
+# Compile of agente_spi.vhd was successful.
+# Compile of auxiliar.vhd was successful.
+# Compile of calc_offset.vhd was successful.
+# Compile of controlador_spi.vhd was successful.
+# Compile of controlador_spi_tb.vhd was successful.
+# Compile of estimador.vhd was successful.
+# Compile of master_spi.vhd was successful.
+# Compile of master_spi_tb.vhd was successful.
+# Compile of cuantificador.vhd failed.
+# Compile of agente_spi.vhd was successful.
+# Compile of auxiliar.vhd was successful.
+# Compile of calc_offset.vhd was successful.
+# Compile of controlador_spi.vhd was successful.
+# Compile of controlador_spi_tb.vhd was successful.
+# Compile of estimador.vhd was successful.
+# Compile of master_spi.vhd was successful.
+# Compile of master_spi_tb.vhd was successful.
+# Compile of cuantificador.vhd failed.
+run -over
 # Compile of cuantificador.vhd was successful.
-# Compile of acelerometro.vhd failed with 3 errors.
-# Compile of acelerometro.vhd failed with 1 errors.
-# Compile of acelerometro.vhd failed with 1 errors.
-# Compile of acelerometro.vhd failed with 1 errors.
-# Compile of acelerometro.vhd was successful.
+# End time: 14:18:09 on May 09,2022, Elapsed time: 1:29:47
+# Errors: 0, Warnings: 18

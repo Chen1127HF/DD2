@@ -38,8 +38,6 @@ architecture estructural of acelerometro is
   signal X_media:  std_logic_vector(11 downto 0);
   signal Y_media:  std_logic_vector(11 downto 0);
 
-
-
   signal tic_200ns:	std_logic;
 
 begin
@@ -68,14 +66,7 @@ begin
 		SPC     => SPC,
 		SDI     => SDI,
                 fin_tx  => fin_tx);
-  agente: 
-       entity work.agente_spi(sim)
-       port map(pos_X => pos_X,
-                pos_Y => pos_Y,
-                nCS => nCS,
-                SPC => SPC,
-                SDI => SDI,
-                SDO => SDO);
+
   calc_offset: 
        entity work.calc_offset(rtl)
        port map(clk     => clk,

@@ -5,13 +5,13 @@ use ieee.std_logic_unsigned.all;
 entity acelerometro is
 port(clk:      in     std_logic;
      nRst:     in     std_logic;
-     ena:      in     std_logic;
+     ena_op:   in     std_logic;
      mux_disp: buffer std_logic_vector(7 downto 0);
      disp:     buffer std_logic_vector(7 downto 0);
      leds:     buffer std_logic_vector(7 downto 0));
 end entity;
 
-architecture estructural of acelerometro is
+architecture structural of acelerometro is
                      
   signal dato:    std_logic_vector(15 downto 0); -- Byte de dato introducido
 
@@ -26,7 +26,7 @@ architecture estructural of acelerometro is
 
   signal fin_tx:  std_logic;
 
-  signal ena_op:  std_logic;
+  signal ena:  std_logic;
 
   signal pos_X:   std_logic_vector(1 downto 0);
   signal pos_Y:   std_logic_vector(1 downto 0);
@@ -37,8 +37,6 @@ architecture estructural of acelerometro is
 
   signal X_media:  std_logic_vector(11 downto 0);
   signal Y_media:  std_logic_vector(11 downto 0);
-
-
 
   signal tic_200ns:	std_logic;
 
@@ -68,14 +66,7 @@ begin
 		SPC     => SPC,
 		SDI     => SDI,
                 fin_tx  => fin_tx);
-  agente: 
-       entity work.agente_spi(sim)
-       port map(pos_X => pos_X,
-                pos_Y => pos_Y,
-                nCS => nCS,
-                SPC => SPC,
-                SDI => SDI,
-                SDO => SDO);
+
   calc_offset: 
        entity work.calc_offset(rtl)
        port map(clk     => clk,
@@ -107,4 +98,4 @@ begin
 		disp    => disp,
                 leds    => leds);
 
-end estructural;
+end structural;

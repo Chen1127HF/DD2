@@ -117,5 +117,4 @@ begin
   Y_out_bias <=  offset_Y        when offset_rdy = '1' else  -- A completar por el estudiante
                 (others => '0');
 
-
 end rtl;

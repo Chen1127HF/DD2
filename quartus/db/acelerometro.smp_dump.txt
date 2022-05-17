@@ -1,0 +1,7 @@
+
+State Machine - |acelerometro|controlador_spi:controlador|estado
+Name estado.medidas estado.offset estado.config estado.preconfig 
+estado.preconfig 0 0 0 0 
+estado.config 0 0 1 1 
+estado.offset 0 1 0 1 
+estado.medidas 1 0 0 1 
