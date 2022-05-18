@@ -153,7 +153,7 @@ begin
   dut: entity work.master_spi(rtl)
        port map(clk     => clk,
                 nRst    => nRst,
-                ini     => ena,
+                ini_tx  => ena,
 		dato    => dato,
 		SDO     => SDO,
                 ena_rd  => ena_rd,

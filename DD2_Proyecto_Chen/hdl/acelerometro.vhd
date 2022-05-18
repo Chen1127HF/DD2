@@ -5,10 +5,10 @@ use ieee.std_logic_unsigned.all;
 entity acelerometro is
 port(clk:      in     std_logic;
      nRst:     in     std_logic;
-		 SDO:			 in			std_logic;
-		 SDI:			 buffer std_logic;
-		 nCS:			 buffer	std_logic;
-		 SPC:			 buffer	std_logic;
+     SDO:      in     std_logic;
+     SDI:      buffer std_logic;
+     nCS:      buffer std_logic;
+     SPC:      buffer std_logic;
      mux_disp: buffer std_logic_vector(7 downto 0);
      disp:     buffer std_logic_vector(7 downto 0);
      leds:     buffer std_logic_vector(7 downto 0));
@@ -23,7 +23,7 @@ architecture estructural of acelerometro is
 
   signal fin_tx:  std_logic;
 
-  signal ena:  std_logic;
+  signal ena:     std_logic;
 
   signal pos_X:   std_logic_vector(1 downto 0);
   signal pos_Y:   std_logic_vector(1 downto 0);
@@ -42,10 +42,8 @@ begin
        entity work.controlador_spi(rtl)
        port map(clk     => clk,
                 nRst    => nRst,
-                ena_rd  => ena_rd,
-								reg_SDO => data_rd,
                 fin_tx  => fin_tx,
-								libre   => nCS,
+                libre   => nCS,
                 ini_tx  => ena,
                 dato    => dato);
 
@@ -53,14 +51,14 @@ begin
        entity work.master_spi(rtl)
        port map(clk     => clk,
                 nRst    => nRst,
-                ini     => ena,
-								dato    => dato,
-								SDO     => SDO,
+                ini_tx  => ena,
+                dato    => dato,
+                SDO     => SDO,
                 ena_rd  => ena_rd,
                 reg_SDO => data_rd,
-								nCS     => nCS,
-								SPC     => SPC,
-								SDI     => SDI,
+                nCS     => nCS,
+                SPC     => SPC,
+                SDI     => SDI,
                 fin_tx  => fin_tx);
 
   calc_offset: 
@@ -68,9 +66,9 @@ begin
        port map(clk               => clk,
                 nRst              => nRst,
                 ena_rd            => ena_rd,
-								dato_rd           => data_rd,
+                dato_rd           => data_rd,
                 X_out_bias        => X_out_bias,
-								Y_out_bias        => Y_out_bias,
+                Y_out_bias        => Y_out_bias,
                 muestra_bias_rdy  => muestra_bias_rdy);
 
   estimador: 
@@ -78,7 +76,7 @@ begin
        port map(clk              => clk,
                 nRst             => nRst,
                 X_out_bias       => X_out_bias,
-								Y_out_bias       => Y_out_bias,
+                Y_out_bias       => Y_out_bias,
                 muestra_bias_rdy => muestra_bias_rdy,
                 X_media          => X_media,
                 Y_media          => Y_media);
@@ -91,7 +89,7 @@ begin
                 Y_media  => Y_media,
                 ena      => muestra_bias_rdy,
                 mux_disp => mux_disp,
-								disp     => disp,
+                disp     => disp,
                 leds     => leds);
 
 end estructural;

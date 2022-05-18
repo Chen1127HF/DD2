@@ -93,8 +93,6 @@ begin
        entity work.controlador_spi(rtl)
        port map(clk     => clk,
                 nRst    => nRst,
-                ena_rd  => ena_rd,
-		reg_SDO => data_rd,
                 fin_tx  => fin_tx,
 		libre   => nCS,
                 ini_tx  => ena,
@@ -104,7 +102,7 @@ begin
        entity work.master_spi(rtl)
        port map(clk     => clk,
                 nRst    => nRst,
-                ini     => ena,
+                ini_tx  => ena,
 		dato    => dato,
 		SDO     => SDO,
                 ena_rd  => ena_rd,
@@ -117,40 +115,40 @@ begin
        entity work.agente_spi(sim)
        port map(pos_X => pos_X,
                 pos_Y => pos_Y,
-                nCS => nCS,
-                SPC => SPC,
-                SDI => SDI,
-                SDO => SDO);
+                nCS   => nCS,
+                SPC   => SPC,
+                SDI   => SDI,
+                SDO   => SDO);
   calc_offset: 
        entity work.calc_offset(rtl)
-       port map(clk     => clk,
-                nRst    => nRst,
-                ena_rd  => ena_rd,
-		dato_rd => data_rd,
-                X_out_bias  => X_out_bias,
-		Y_out_bias   => Y_out_bias,
-                muestra_bias_rdy    => muestra_bias_rdy);
+       port map(clk              => clk,
+                nRst             => nRst,
+                ena_rd           => ena_rd,
+		dato_rd          => data_rd,
+                X_out_bias       => X_out_bias,
+		Y_out_bias       => Y_out_bias,
+                muestra_bias_rdy => muestra_bias_rdy);
 
   estimador: 
        entity work.estimador(rtl)
-       port map(clk     => clk,
-                nRst    => nRst,
-                X_out_bias  => X_out_bias,
-		Y_out_bias   => Y_out_bias,
-                muestra_bias_rdy    => muestra_bias_rdy,
-                X_media    => X_media,
-                Y_media    => Y_media);
+       port map(clk              => clk,
+                nRst             => nRst,
+                X_out_bias       => X_out_bias,
+		Y_out_bias       => Y_out_bias,
+                muestra_bias_rdy => muestra_bias_rdy,
+                X_media          => X_media,
+                Y_media          => Y_media);
 
   cuantificador:
        entity work.cuantificador(rtl)
-       port map(clk     => clk,
-                nRst    => nRst,
-                X_media => X_media,
-                Y_media => Y_media,
-                ena     => muestra_bias_rdy,
-                mux_disp=> mux_disp,
-		disp    => disp,
-                leds    => leds);
+       port map(clk      => clk,
+                nRst     => nRst,
+                X_media  => X_media,
+                Y_media  => Y_media,
+                ena      => muestra_bias_rdy,
+                mux_disp => mux_disp,
+		disp     => disp,
+                leds     => leds);
 
 
 end test;

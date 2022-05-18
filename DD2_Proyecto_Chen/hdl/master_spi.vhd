@@ -1,11 +1,15 @@
+-- Autor: Haofan Chen e Isabel Nieto
+-- Fecha: 18/05/2022
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 
+
 entity master_spi is
 port(clk:     in     std_logic;
      nRst:    in     std_logic;
-     ini:     in     std_logic;                     -- Inicio de transmision
+     ini_tx:  in     std_logic;                     -- Inicio de transmision
      dato:    in     std_logic_vector(15 downto 0); -- Byte de dato introducido
      SDO:     in     std_logic;                     -- Slave Data Output (Master input)
      ena_rd:  buffer std_logic;                     -- Habilitación de lectura
@@ -48,7 +52,7 @@ begin
       reg_nWR <= '0';
     elsif clk'event and clk = '1' then
 
-      if ini = '1' then                        -- Se inicia la comunicacion
+      if ini_tx = '1' then                        -- Se inicia la comunicacion
         reg_nWR <= dato(15);
         cnt_div <= (0=>'1', others => '0');
 
@@ -150,7 +154,7 @@ begin
       reg_SDI <= (others => '0');
     elsif clk'event and clk = '1' then 
         
-      if ini = '1' then
+      if ini_tx = '1' then
         reg_SDI <= dato;
 
       elsif ena_SDI = '1' and (not (cnt_byte = 1 and cnt_bit = 0)) then -- Si se habilita la salida y no es el primer bit
