@@ -4,6 +4,18 @@
 			"name" : "Top",
 			"pins" : [
 				{
+					"name" : "SDI",
+					"strict" : false
+				},
+				{
+					"name" : "nCS",
+					"strict" : false
+				},
+				{
+					"name" : "SPC",
+					"strict" : false
+				},
+				{
 					"name" : "mux_disp[0]",
 					"strict" : false
 				},
@@ -104,7 +116,7 @@
 					"strict" : false
 				},
 				{
-					"name" : "ena_op",
+					"name" : "SDO",
 					"strict" : false
 				}
 			]

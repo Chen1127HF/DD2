@@ -4,8 +4,7 @@ use ieee.std_logic_unsigned.all;
 
 entity controlador_spi is
 port(clk:           in     std_logic;
-     nRst:          in     std_logic;
-     ena_op:        in     std_logic;                     -- Habilita la cuenta
+     nRst:          in     std_logic;                     -- Habilita la cuenta
      ena_rd:        in     std_logic;                     -- Habilitación de lectura
      reg_SDO:       in     std_logic_vector(7 downto 0);  -- Dato lectura
      libre:         in     std_logic;                     -- Indica el final de la transmision
@@ -16,7 +15,7 @@ port(clk:           in     std_logic;
 end entity;
 
 architecture rtl of controlador_spi is
-  type t_estado is (preconfig, config, offset, medidas);
+  type t_estado is (config, offset, medidas);
   signal estado: t_estado;
 
  -- constant fdc_5ms: natural := 250000; 
@@ -73,15 +72,10 @@ begin
   process(nRst, clk)
   begin
     if nRst = '0' then
-      estado <= preconfig;
+      estado <= config;
       dato <= (others => '0');
     elsif clk'event and clk = '1' then
       case estado is
-        when preconfig =>
-          if ena_op = '1' then  -- No se tiene que hacer primero la configuracion y luego esperar al boton?
-            estado <= config;
-          end if;
-
         when config  => -- Esto al final lo he puesto aqui para que el mismo proceso maneje dato. Además así solo pones el dato una vez y no constantemente
           if cnt_reg = 0 and libre = '1' then   
             dato <= "0101011110000000";             -- Registro 4

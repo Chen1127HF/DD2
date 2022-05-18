@@ -9,7 +9,10 @@ nRst => master_spi:master.nRst
 nRst => calc_offset:calc_offset.nRst
 nRst => estimador:estimador.nRst
 nRst => cuantificador:cuantificador.nRst
-ena_op => controlador_spi:controlador.ena_op
+SDO => master_spi:master.SDO
+SDI << master_spi:master.SDI
+nCS << master_spi:master.nCS
+SPC << master_spi:master.SPC
 mux_disp[0] << cuantificador:cuantificador.mux_disp[0]
 mux_disp[1] << cuantificador:cuantificador.mux_disp[1]
 mux_disp[2] << cuantificador:cuantificador.mux_disp[2]
@@ -81,7 +84,7 @@ clk => cnt_5ms[14].CLK
 clk => cnt_5ms[15].CLK
 clk => cnt_5ms[16].CLK
 clk => cnt_5ms[17].CLK
-clk => estado~4.DATAIN
+clk => estado~3.DATAIN
 nRst => dato[0]~reg0.ACLR
 nRst => dato[1]~reg0.ACLR
 nRst => dato[2]~reg0.ACLR
@@ -126,11 +129,7 @@ nRst => cnt_320ms[5].ACLR
 nRst => cnt_320ms[6].ACLR
 nRst => cnt_reg[0].ACLR
 nRst => cnt_reg[1].ACLR
-nRst => estado~6.DATAIN
-ena_op => estado.OUTPUTSELECT
-ena_op => estado.OUTPUTSELECT
-ena_op => estado.OUTPUTSELECT
-ena_op => estado.OUTPUTSELECT
+nRst => estado~5.DATAIN
 ena_rd => ~NO_FANOUT~
 reg_SDO[0] => ~NO_FANOUT~
 reg_SDO[1] => ~NO_FANOUT~

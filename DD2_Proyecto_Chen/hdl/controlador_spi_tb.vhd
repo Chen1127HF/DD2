@@ -93,7 +93,6 @@ begin
        entity work.controlador_spi(rtl)
        port map(clk     => clk,
                 nRst    => nRst,
-                ena_op  => ena_op,
                 ena_rd  => ena_rd,
 		reg_SDO => data_rd,
                 fin_tx  => fin_tx,

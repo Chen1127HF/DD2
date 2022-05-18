@@ -67,7 +67,7 @@ begin
     end if;
    end process;
 
-   ena_320ms <= '1' when cnt_320ms > 63 and  cnt_5ms = fdc_5ms else
+   ena_320ms <= '1' when cnt_320ms > 63 and  cnt_5ms = fdc_5ms else --Arreglo
                 '0';
   -- Logica de estados
   process(nRst, clk)

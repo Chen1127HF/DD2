@@ -60,7 +60,6 @@ set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
 set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (VHDL)"
 set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
 set_global_assignment -name EDA_OUTPUT_DATA_FORMAT VHDL -section_id eda_simulation
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
@@ -115,4 +114,16 @@ set_location_assignment PIN_B7 -to leds[3]
 set_location_assignment PIN_A6 -to leds[2]
 set_location_assignment PIN_C8 -to leds[1]
 set_location_assignment PIN_C7 -to leds[0]
-set_location_assignment PIN_M21 -to nRst
+set_location_assignment PIN_H21 -to nRst
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to nCS
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDO
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SPC
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDI
+set_location_assignment PIN_E9 -to nCS
+set_location_assignment PIN_C6 -to SDI
+set_location_assignment PIN_D5 -to SDO
+set_location_assignment PIN_B5 -to SPC
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_instance_assignment -name IO_STANDARD "1.2 V" -to leds
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
