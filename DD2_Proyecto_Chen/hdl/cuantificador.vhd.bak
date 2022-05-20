@@ -1,3 +1,5 @@
+-- Autores: Haofan Chen e Isabel Nieto
+-- Fecha: 18/05/2022
 library work;
 use work.auxiliar.all;
 
@@ -5,6 +7,8 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_signed.all;
 
+-- Cuantificador
+-- Funcionalidad: muestra por los displays y los leds la media de los ejes Y y X respectivamente.
 entity cuantificador is
 generic(DIV_1ms : natural     :=99999;
         N:        in positive := 16);  -- numero de registros del banco (potencia de 2)
@@ -12,22 +16,21 @@ generic(DIV_1ms : natural     :=99999;
 port(nRst:       in     std_logic;
      clk:        in     std_logic;
 
-     X_media:    in     std_logic_vector(11 downto 0); 
-     Y_media:    in     std_logic_vector(11 downto 0);
+     X_media:    in     std_logic_vector(11 downto 0);    -- Media de valores del eje X
+     Y_media:    in     std_logic_vector(11 downto 0);    -- Media de valores del eje Y
 
-     ena:        in     std_logic;
-
-     mux_disp:   buffer std_logic_vector(7 downto 0);
-     disp:       buffer std_logic_vector(7 downto 0);
-     leds:       buffer std_logic_vector(7 downto 0));
+     mux_disp:   buffer std_logic_vector(7 downto 0);     -- Indica que digito debe encenderse
+     disp:       buffer std_logic_vector(7 downto 0);     -- Indica que segmento dentro de un digito debe encederse
+     leds:       buffer std_logic_vector(7 downto 0));    -- Indica que leds deben encenderse (activo a nivel bajo)
 
 end entity;
 
 architecture rtl of cuantificador is			
-
+  -- Contador 1 ms
   signal cnt_div_1ms:    std_logic_vector(16 downto 0);
   signal tic_1ms:        std_logic;
 
+  -- Display
   signal dig_activo:     std_logic;
   signal digitos:        std_logic_vector(7 downto 0);
 

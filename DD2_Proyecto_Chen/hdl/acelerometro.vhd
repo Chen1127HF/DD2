@@ -89,7 +89,6 @@ begin
                 nRst     => nRst,
                 X_media  => X_media,
                 Y_media  => Y_media,
-                ena      => muestra_bias_rdy,
                 mux_disp => mux_disp,
                 disp     => disp,
                 leds     => leds);

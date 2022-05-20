@@ -24,12 +24,11 @@ architecture estructural of acelerometro is
   signal dato_cmd:    std_logic_vector(15 downto 0); -- Dato que se desea enviar al esclavo (Controlador -> Master)
   signal libre:       std_logic;                     -- Inidica la disponibilidad para tx   (Master -> Controlador)
 
-  signal ini_tx:     std_logic;                     -- Habilitacion transmision (Controlador -> Master)
-  signal fin_tx:     std_logic;                     -- Fin transmision          (Master -> Controlador)
+  signal ini_tx:      std_logic;                     -- Habilitacion transmision (Controlador -> Master)
+  signal fin_tx:      std_logic;                     -- Fin transmision          (Master -> Controlador)
 
   signal ena_rd:      std_logic;                     -- Habilitación de lectura  (Master -> Calcular offset)
   signal dato_rd:     std_logic_vector(7 downto 0);  -- Registro de lectura      (Master -> Calcular offset)
-
 
   signal X_out_bias:  std_logic_vector(10 downto 0); -- Medida eje X referenciada (Calcular offset -> estimador)
   signal Y_out_bias:  std_logic_vector(10 downto 0); -- Medida eje Y referenciada (Calcular offset -> estimador)
