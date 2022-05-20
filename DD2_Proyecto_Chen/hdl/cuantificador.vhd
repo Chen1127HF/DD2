@@ -7,30 +7,25 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_signed.all;
 
--- Cuantificador
--- Funcionalidad: muestra por los displays y los leds la media de los ejes Y y X respectivamente.
 entity cuantificador is
-generic(DIV_1ms : natural     :=99999;
-        N:        in positive := 16);  -- numero de registros del banco (potencia de 2)
+generic(N:        in positive := 16);  -- numero de registros del banco (potencia de 2)
 
 port(nRst:       in     std_logic;
      clk:        in     std_logic;
 
-     X_media:    in     std_logic_vector(11 downto 0);    -- Media de valores del eje X
-     Y_media:    in     std_logic_vector(11 downto 0);    -- Media de valores del eje Y
+     X_media:    in     std_logic_vector(11 downto 0); 
+     Y_media:    in     std_logic_vector(11 downto 0);
 
-     mux_disp:   buffer std_logic_vector(7 downto 0);     -- Indica que digito debe encenderse
-     disp:       buffer std_logic_vector(7 downto 0);     -- Indica que segmento dentro de un digito debe encederse
-     leds:       buffer std_logic_vector(7 downto 0));    -- Indica que leds deben encenderse (activo a nivel bajo)
+     ena_1ms:    in	std_logic;
+
+     mux_disp:   buffer std_logic_vector(7 downto 0);
+     disp:       buffer std_logic_vector(7 downto 0);
+     leds:       buffer std_logic_vector(7 downto 0));
 
 end entity;
 
 architecture rtl of cuantificador is			
-  -- Contador 1 ms
-  signal cnt_div_1ms:    std_logic_vector(16 downto 0);
-  signal tic_1ms:        std_logic;
 
-  -- Display
   signal dig_activo:     std_logic;
   signal digitos:        std_logic_vector(7 downto 0);
 
@@ -68,28 +63,13 @@ begin
               "11000000" when Y_media(11 downto 0) < 217  else
               "10000000";
 
- -- generación del tic de 1 ms
- divisor_1ms: process(clk, nRst)
-  begin
-    if nRst = '0' then
-      cnt_div_1ms <= (others => '0');
-    elsif clk'event and clk = '1' then
-      if tic_1ms = '1' then
-        cnt_div_1ms <= (others => '0');
-      else
-        cnt_div_1ms <= cnt_div_1ms + 1;
-      end if;
-    end if;
-  end process divisor_1ms;
-  tic_1ms <= '1' when cnt_div_1ms = DIV_1ms else '0';
-
  -- Activacion de los catodos
  catodos: process(clk, nRst)
   begin
     if nRst = '0' then
       mux_disp <= (0=> '0',others => '1');
     elsif clk'event and clk = '1' then
-      if tic_1ms = '1' then
+      if ena_1ms = '1' then
         mux_disp <= mux_disp(6 downto 0) & mux_disp(7);
       end if;
     end if;

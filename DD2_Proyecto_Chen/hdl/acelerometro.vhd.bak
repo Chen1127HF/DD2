@@ -38,14 +38,25 @@ architecture estructural of acelerometro is
   signal X_media:  std_logic_vector(11 downto 0);    -- Medida final del eje X    (Estimador -> Cuantificador)
   signal Y_media:  std_logic_vector(11 downto 0);    -- Medida final del eje Y    (Estimador -> Cuantificador)
 
+	signal ena_1ms: std_logic;
+	signal ena_5ms: std_logic;
 
 begin
+
+  timer:
+       entity work.timer(rtl)
+       port map(clk     => clk,
+                nRst    => nRst,
+                ena_1ms	=> ena_1ms,
+                ena_5ms	=> ena_5ms);
+
   controlador: 
        entity work.controlador_spi(rtl)
        port map(clk      => clk,
                 nRst     => nRst,
                 fin_tx   => fin_tx,
                 libre    => nCS,
+                ena_5ms	 => ena_5ms,
                 ini_tx   => ini_tx,
                 dato_cmd => dato_cmd);
 
@@ -65,6 +76,7 @@ begin
 
   calc_offset: 
        entity work.calc_offset(rtl)
+       generic map( N => 64)
        port map(clk               => clk,
                 nRst              => nRst,
                 ena_rd            => ena_rd,
@@ -89,7 +101,7 @@ begin
                 nRst     => nRst,
                 X_media  => X_media,
                 Y_media  => Y_media,
-                ena      => muestra_bias_rdy,
+                ena_1ms  => ena_1ms,
                 mux_disp => mux_disp,
                 disp     => disp,
                 leds     => leds);

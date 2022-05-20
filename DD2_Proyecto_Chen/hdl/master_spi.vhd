@@ -4,15 +4,11 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 
--- Master SPI
--- Funcion: se comunica con el esclavo SPI. En funcion del dato que se le introduzca (dato_cmd) podrá
---
---          1. Inicialmente, le manda al esclavo 
 entity master_spi is
 port(clk:     		in     std_logic;
      nRst:    		in     std_logic;
      ini_tx:  		in     std_logic;                     -- Inicio de transmision
-     dato_cmd:          in     std_logic_vector(15 downto 0); -- Byte de dato introducido
+     dato_cmd:    in     std_logic_vector(15 downto 0); -- Byte de dato introducido
      SDO:     		in     std_logic;                     -- Slave Data Output (Master input)
      ena_rd:  		buffer std_logic;                     -- Habilitación de lectura
      dato_rd: 		buffer std_logic_vector(7 downto 0);  -- Byte de SDO, entregado por slave
@@ -25,7 +21,7 @@ end entity;
 
 architecture rtl of master_spi is
   -- Divisor de frecuencias
-  signal cnt_div:       std_logic_vector(3 downto 0); 
+  signal cnt_div:       std_logic_vector(5 downto 0); 
 
   
   -- Cuenta para generacion de SPC y salidas
@@ -44,6 +40,8 @@ architecture rtl of master_spi is
   signal reg_SDI: std_logic_vector(15 downto 0);
   signal reg_nWR: std_logic;
 
+	signal SDO_T1:	std_logic;
+
 begin
 
   -- Contador modulo 10 para generación de nuevo reloj 5 MHz = 200 ns
@@ -61,7 +59,7 @@ begin
       elsif fin_tx = '1' then                  -- Se termina la comunicacion
         cnt_div <= (others => '0');
 
-      elsif cnt_div > 10 then                  -- Reiniciar contador			
+      elsif cnt_div > 50 then                  -- Reiniciar contador			
         cnt_div <= (1=>'1', others => '0');
 			
       elsif cnt_div /= 0 then                  -- Contar	
@@ -70,23 +68,21 @@ begin
     end if;
   end process;
 
-
-  -- SPC
   process(clk, nRst)
   begin
     if nRst = '0' then
-        SPC <= '1';
+      SPC <= '1';
     elsif clk'event and clk = '1' then
-      if cnt_div > 1 and cnt_div < 7 and nCS = '0' then
-        SPC <= '0';
-      else
-        SPC <= '1';
+      if nCS = '0' and cnt_div > 1 and cnt_div < 35 then
+				SPC <= '0';
+			else
+				SPC <= '1';
       end if;
     end if;
   end process;
 
   -- Generacion de las señales SPI
-  SPC_up   <= '1' when nCS = '0' and cnt_div = 7 else
+  SPC_up   <= '1' when nCS = '0' and cnt_div = 35 else
               '0';
   SPC_down <= '1' when nCS = '0' and cnt_div = 3 else
               '0';
@@ -141,14 +137,24 @@ begin
              '1' when SPC_down = '1' and reg_nWR = '1' and cnt_byte = 1 else    -- 1er byte de la operacion de lectura es escritura
              '0';                            
 
-  -- Registro de entrada    
+  -- Registro de entrada
+  process(clk, nRst)
+  begin
+    if nRst = '0' then
+      SDO_T1 <= '0';
+    elsif clk'event and clk = '1' then
+			SDO_T1 <= SDO;
+    end if;
+  end process;
+
+    
   process(clk, nRst)
   begin
     if nRst = '0' then
       dato_rd <= (others =>'0');
     elsif clk'event and clk = '1' then
       if ena_SDO = '1' then    
-        dato_rd <= dato_rd(6 downto 0) & SDO;   -- Se desplaza el registro de entrada
+        dato_rd <= dato_rd(6 downto 0) & SDO_T1;   -- Se desplaza el registro de entrada
 
         if ena_bit = '1' then                   -- Si el contador ha leido 8 bits se muestra la salida
           ena_rd <= '1';
