@@ -1,50 +1,83 @@
+-- Autores: Haofan Chen e Isabel Nieto
+-- Fecha: 18/05/2022
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 
+-- Controlador SPI
+
+-- Funcionalidad
+-- El modulo maneja la comunicacion con el master SPI. Se encarga de:
+--       1.- Enviar los registros de configuracion. Actualmente los registros configurados son:
+--              Registro 1 (h20): 01100011                   valor
+--                         - bit [7..4]  -> frecuencia 200Hz   0110
+--                         - bit (3)    -> normal mode         1
+--                         - bit (2)    -> Z-axis              0
+--                         - bit (1)    -> Y-axis              1
+--                         - bit (0)    -> X-axis              1
+--
+--              Registro 4 (h23): 10000000 (activar bit BDU)
+--
+--       2.- Ordenar la medida de los ejes X e Y del acelerómetro cada 5ms. 
+--           Para ello se envia el dato 11101000:
+--                         - bit (7)    -> R/W lectura          1
+--                         - bit (6)    -> auto incrementar     1
+--                         - bit [5..0] -> direccion           101000 (h28)
+
+
+
+
+-- Entradas:
+--        libre:   Indica si esta libre para comenzar la comunicacion.     Origen: Master SPI
+--        fin_tx:  Indica cuando se ha terminador de transferir el         Origen: Master SPI
+--                 último bit de la transmision.
+-- Salidas:                           
+--        ini_tx:   Indica que se desea realizar una tranferencia.         Destino: Master SPI
+--        dato_cmd: Indica cual es el dato que se desea transferir.        Destino: Master SPI
+
 entity controlador_spi is
 port(clk:           in     std_logic;
-     nRst:          in     std_logic;
-     ena_op:        in     std_logic;                     -- Habilita la cuenta
-     ena_rd:        in     std_logic;                     -- Habilitación de lectura
-     reg_SDO:       in     std_logic_vector(7 downto 0);  -- Dato lectura
+     nRst:          in     std_logic;                     -- Habilita la cuenta
      libre:         in     std_logic;                     -- Indica el final de la transmision
      fin_tx:        in     std_logic;
      ini_tx:        buffer std_logic;                     -- Inicio de transmision
-     dato:          buffer std_logic_vector(15 downto 0)  -- Byte a enviar
+     dato_cmd:      buffer std_logic_vector(15 downto 0)  -- Byte a enviar
     );
 end entity;
 
 architecture rtl of controlador_spi is
-  type t_estado is (preconfig, config, offset, medidas);
-  signal estado: t_estado;
 
- -- constant fdc_5ms: natural := 250000; 
-  constant fdc_5ms: natural := 500;  --Simulacion
-  signal cnt_reg: std_logic_vector(1 downto 0);
+  constant fdc_5ms: natural := 250000; 
+--  constant fdc_5ms: natural := 500;  --Simulacion
 
+  -- Contador registros. Indica cuantos registros se han enviado y 
+  -- cual es el siguiente a enviar. 
+  --     0: Se debe enviar el registro de configuracion 4.
+  --     1: Se debe enviar el registro de configuracion 1.
+  --     2: Se debe enviar el comando para ordenar una transferencia de lectura.
+  signal cmd: std_logic_vector(1 downto 0);  
+
+
+  -- Contador 5 ms
   signal cnt_5ms: std_logic_vector(17 downto 0);
   signal ena_5ms: std_logic;
-  signal cnt_320ms: std_logic_vector(6 downto 0);
-  signal ena_320ms: std_logic;
-
-  signal dato_lectura: std_logic_vector(7 downto 0);
-  signal ena_medida: std_logic;
-  signal ena_medida_offset: std_logic;
-
 
 begin
+
   -- Contador medidas 5 ms
+  -- Solo se inicia la cuenta cuando se esta pidiendo 
+  -- transferencias de lectura. (cmd = 2)
   process(nRst, clk)
   begin
     if nRst = '0' then
       cnt_5ms <= (0=>'1', others => '0');
     elsif clk'event and clk = '1' then
-      if estado = offset or estado = medidas then
+      if cmd = 2 then                       
         if ena_5ms = '1' then
           cnt_5ms <= (0=>'1', others => '0');
         else
-          cnt_5ms <= cnt_5ms+1;
+          cnt_5ms <= cnt_5ms + 1;
         end if;
       end if;
     end if;
@@ -53,117 +86,51 @@ begin
    ena_5ms <= '1' when cnt_5ms = fdc_5ms else
               '0';
 
-  -- Contador medidas 320 ms
+  -- Logica
   process(nRst, clk)
   begin
     if nRst = '0' then
-      cnt_320ms <= (0=>'1', others => '0');
+      dato_cmd <= (others => '0');
     elsif clk'event and clk = '1' then
-      if ena_320ms = '1' then
-        cnt_320ms <= (0=>'1', others => '0');
-      elsif estado = offset and ena_5ms = '1' then
-        cnt_320ms <= cnt_320ms+1;
-      end if;
-    end if;
-   end process;
+      if    cmd = 0 and libre = '1' then   
+        dato_cmd <= "00100011" & "10000000";             -- Registro 4
 
-   ena_320ms <= '1' when cnt_320ms > 63 and  cnt_5ms = fdc_5ms else --Arreglo
-                '0';
-  -- Logica de estados
-  process(nRst, clk)
-  begin
-    if nRst = '0' then
-      estado <= preconfig;
-      dato <= (others => '0');
-    elsif clk'event and clk = '1' then
-      case estado is
-        when preconfig =>
-          if ena_op = '1' then  -- No se tiene que hacer primero la configuracion y luego esperar al boton?
-            estado <= config;
-          end if;
-
-        when config  => -- Esto al final lo he puesto aqui para que el mismo proceso maneje dato. Además así solo pones el dato una vez y no constantemente
-          if cnt_reg = 0 and libre = '1' then   
-            dato <= "0101011110000000";             -- Registro 4
-
-          elsif cnt_reg = 1 and libre = '1' then
-            dato <= "0101010001100011";             -- Registro 1 
+      elsif cmd = 1 and libre = '1' then
+        dato_cmd <= "00100000" & "01100011";             -- Registro 1 
  
-          elsif cnt_reg = 2 then
-            estado <= offset;
-            dato <= "1101110011110000";   -- El dato no vamos a tener que cambiarlo ya mas
-          end if;
-
-        when offset  =>
-          if ena_320ms = '1' then
-            estado <= medidas;
-          end if;
-
-        when medidas =>
- 
-
-      end case;
+      elsif cmd = 2 then                            
+        dato_cmd <= "11101000" & "11110000";             -- Medidas
+       end if;
     end if;
   end process;
 
-  -- Contador de registros
+  -- Contador comandos
+  -- Indica cual es el proximo dato a enviar.
   process (nRst, clk)
   begin
     if nRst = '0' then
-      cnt_reg <= (others => '0');
+      cmd <= (others => '0');
 
     elsif clk'event and clk = '1' then
-      if fin_tx = '1' and estado = config then            
-        cnt_reg <= cnt_reg +1;
+      if fin_tx = '1' and cmd <2 then            
+        cmd <= cmd + 1;
       end if;
 
     end if;
   end process;
 
-
-  
-  --  Tomar medidas
+  -- Iniciacion de la transimision.
   process(nRst, clk)
   begin
-
   if nRst = '0' then 
     ini_tx <= '0';
   elsif clk'event and clk = '1' then
-    if estado = medidas or estado = offset then
-      if libre = '1' and ena_5ms = '1' then
-        ini_tx <= '1';
-      else
-        ini_tx <= '0';
-      end if;
-
-    elsif estado = config then
-      if libre = '1' then
-        ini_tx <= '1';
-      else
-        ini_tx <= '0';
-      end if;
+    if libre = '1' and ini_tx = '0' and (ena_5ms = '1' or cmd /= 2) then -- Se inciará la comunicacion si: 
+      ini_tx <= '1';                                                     -- El master esta libre   
+    else                                                                 -- No se ha iniciado ya la comunicacion
+      ini_tx <= '0';                                                     -- Si se están enviado registros o se ha activado la señal ena_5ms
     end if;
   end if;
   end process;
-
-  -- Proceso lectura de bytes
-  process(nRst, clk)
-  begin
-  if nRst = '0' then
-    dato_lectura <= (others => '0');
-    ena_medida <= '0';
-  elsif clk'event and clk = '1' then
-    if ena_rd = '1' then
-      dato_lectura <= reg_SDO;
-      ena_medida <= '1';
-
-    else
-      ena_medida <= '0';
-    end if;
-  end if;
-  end process;
-
-  ena_medida_offset <= ena_medida when estado = offset else
-                       '0';
 
 end rtl;

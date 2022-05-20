@@ -9,17 +9,17 @@ entity cuantificador is
 generic(DIV_1ms : natural     :=99999;
         N:        in positive := 16);  -- numero de registros del banco (potencia de 2)
 
-port(nRst:             in     std_logic;
-     clk:              in     std_logic;
+port(nRst:       in     std_logic;
+     clk:        in     std_logic;
 
-     X_media:          in     std_logic_vector(11 downto 0); 
-     Y_media:          in     std_logic_vector(11 downto 0);
+     X_media:    in     std_logic_vector(11 downto 0); 
+     Y_media:    in     std_logic_vector(11 downto 0);
 
-     ena:              in     std_logic;
+     ena:        in     std_logic;
 
-     mux_disp:         buffer std_logic_vector(7 downto 0);
-     disp:             buffer std_logic_vector(7 downto 0);
-     leds:             buffer std_logic_vector(7 downto 0));
+     mux_disp:   buffer std_logic_vector(7 downto 0);
+     disp:       buffer std_logic_vector(7 downto 0);
+     leds:       buffer std_logic_vector(7 downto 0));
 
 end entity;
 
@@ -33,40 +33,37 @@ architecture rtl of cuantificador is
 
 begin
 
-  digitos <= "00000001" when X_media(11 downto 0)>= 250 else -- 1 g: (2*15-15)/15 *(1000/4  =*250) 
-	     "00000011" when X_media(11 downto 0)>= 217 else -- 1 g: (2*14-15)/15 *(1000/4  =*250)
-	     "00000111" when X_media(11 downto 0)>= 183 else
-	     "00001111" when X_media(11 downto 0)>= 150 else
-	     "00011111" when X_media(11 downto 0)>= 117 else
-	     "00111111" when X_media(11 downto 0)>= 83  else
-	     "01111111" when X_media(11 downto 0)>= 50  else
-	     "11111111" when X_media(11 downto 0)>= 17  else
-	     "11111110" when X_media(11 downto 0)>=-17  else
-	     "11111100" when X_media(11 downto 0)>=-50  else
-	     "11111000" when X_media(11 downto 0)>=-83  else
-	     "11110000" when X_media(11 downto 0)>=-117 else
-	     "11100000" when X_media(11 downto 0)>=-150 else
-	     "11000000" when X_media(11 downto 0)>=-183 else
-	     "10000000" when X_media(11 downto 0)>=-250 else
-	     "00000000";
+  leds <= "11111110" when X_media(11 downto 0) < -217 else -- N = 1 (2*1-15)/15 *(1000/4  =*250) 
+          "11111100" when X_media(11 downto 0) < -183 else
+          "11111000" when X_media(11 downto 0) < -150 else
+          "11110000" when X_media(11 downto 0) < -117 else
+          "11100000" when X_media(11 downto 0) < -83  else
+          "11000000" when X_media(11 downto 0) < -50  else
+          "10000000" when X_media(11 downto 0) < -17  else
+          "00000000" when X_media(11 downto 0) < 17   else
+          "00000001" when X_media(11 downto 0) < 50   else
+          "00000011" when X_media(11 downto 0) < 83   else
+          "00000111" when X_media(11 downto 0) < 117  else
+          "00001111" when X_media(11 downto 0) < 150  else
+          "00011111" when X_media(11 downto 0) < 183  else
+          "00111111" when X_media(11 downto 0) < 217  else
+          "01111111";
 
-
-  leds    <= "00000001" when Y_media(11 downto 0)>= 250 else -- 1 g: (2*15-15)/15 *(1000/4  =*250) 
-	     "00000011" when Y_media(11 downto 0)>= 217 else -- 1 g: (2*14-15)/15 *(1000/4  =*250)
-	     "00000111" when Y_media(11 downto 0)>= 183 else
-	     "00001111" when Y_media(11 downto 0)>= 150 else
-	     "00011111" when Y_media(11 downto 0)>= 117 else
-	     "00111111" when Y_media(11 downto 0)>= 83  else
-	     "01111111" when Y_media(11 downto 0)>= 50  else
-	     "11111111" when Y_media(11 downto 0)>= 17  else
-	     "11111110" when Y_media(11 downto 0)>=-17  else
-	     "11111100" when Y_media(11 downto 0)>=-50  else
-	     "11111000" when Y_media(11 downto 0)>=-83  else
-	     "11110000" when Y_media(11 downto 0)>=-117 else
-	     "11100000" when Y_media(11 downto 0)>=-150 else
-	     "11000000" when Y_media(11 downto 0)>=-183 else
-	     "10000000" when Y_media(11 downto 0)>=-250 else
-	     "00000000";
+  digitos <=  "00000001" when Y_media(11 downto 0) < -217 else -- N = 1 (2*1-15)/15 *(1000/4  =*250) 
+              "00000011" when Y_media(11 downto 0) < -183 else
+              "00000111" when Y_media(11 downto 0) < -150 else
+              "00001111" when Y_media(11 downto 0) < -117 else
+              "00011111" when Y_media(11 downto 0) < -83  else
+              "00111111" when Y_media(11 downto 0) < -50  else
+              "01111111" when Y_media(11 downto 0) < -17  else
+              "11111111" when Y_media(11 downto 0) < 17   else
+              "11111110" when Y_media(11 downto 0) < 50   else
+              "11111100" when Y_media(11 downto 0) < 83   else
+              "11111000" when Y_media(11 downto 0) < 117  else
+              "11110000" when Y_media(11 downto 0) < 150  else
+              "11100000" when Y_media(11 downto 0) < 183  else
+              "11000000" when Y_media(11 downto 0) < 217  else
+              "10000000";
 
  -- generación del tic de 1 ms
  divisor_1ms: process(clk, nRst)

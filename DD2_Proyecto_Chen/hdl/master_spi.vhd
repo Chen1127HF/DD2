@@ -1,23 +1,19 @@
--- Autor: Haofan Chen e Isabel Nieto
--- Fecha: 18/05/2022
-
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 
-
 entity master_spi is
-port(clk:     in     std_logic;
-     nRst:    in     std_logic;
-     ini_tx:  in     std_logic;                     -- Inicio de transmision
-     dato:    in     std_logic_vector(15 downto 0); -- Byte de dato introducido
-     SDO:     in     std_logic;                     -- Slave Data Output (Master input)
-     ena_rd:  buffer std_logic;                     -- Habilitación de lectura
-     reg_SDO: buffer std_logic_vector(7 downto 0);  -- Byte de SDO, entregado por slave
-     nCS:     buffer std_logic;                     -- Chip Selection
-     SPC:     buffer std_logic;                     -- Clock SPI (5 MHz) 
-     SDI:     buffer std_logic;                     -- Slave Data input  (connected to Master SDO)
-     fin_tx:  buffer std_logic 
+port(clk:     		in     std_logic;
+     nRst:    		in     std_logic;
+     ini_tx:  		in     std_logic;                     -- Inicio de transmision
+     dato_cmd:          in     std_logic_vector(15 downto 0); -- Byte de dato introducido
+     SDO:     		in     std_logic;                     -- Slave Data Output (Master input)
+     ena_rd:  		buffer std_logic;                     -- Habilitación de lectura
+     dato_rd: 		buffer std_logic_vector(7 downto 0);  -- Byte de SDO, entregado por slave
+     nCS:     		buffer std_logic;                     -- Chip Selection
+     SPC:     		buffer std_logic;                     -- Clock SPI (5 MHz) 
+     SDI:     		buffer std_logic;                     -- Slave Data input  (connected to Master SDO)
+     fin_tx:  		buffer std_logic                      -- fin de la comunicacion
      );
 end entity;
 
@@ -52,8 +48,8 @@ begin
       reg_nWR <= '0';
     elsif clk'event and clk = '1' then
 
-      if ini_tx = '1' then                        -- Se inicia la comunicacion
-        reg_nWR <= dato(15);
+      if ini_tx = '1' then                     -- Se inicia la comunicacion
+        reg_nWR <= dato_cmd(15);
         cnt_div <= (0=>'1', others => '0');
 
       elsif fin_tx = '1' then                  -- Se termina la comunicacion
@@ -130,10 +126,10 @@ begin
   process(clk, nRst)
   begin
     if nRst = '0' then
-      reg_SDO <= (others =>'0');
+      dato_rd <= (others =>'0');
     elsif clk'event and clk = '1' then
       if ena_SDO = '1' then    
-        reg_SDO <= reg_SDO(6 downto 0) & SDO;   -- Se desplaza el registro de entrada
+        dato_rd <= dato_rd(6 downto 0) & SDO;   -- Se desplaza el registro de entrada
 
         if ena_bit = '1' then                   -- Si el contador ha leido 8 bits se muestra la salida
           ena_rd <= '1';
@@ -155,7 +151,7 @@ begin
     elsif clk'event and clk = '1' then 
         
       if ini_tx = '1' then
-        reg_SDI <= dato;
+        reg_SDI <= dato_cmd;
 
       elsif ena_SDI = '1' and (not (cnt_byte = 1 and cnt_bit = 0)) then -- Si se habilita la salida y no es el primer bit
         reg_SDI <= reg_SDI(14 downto 0) & '0';

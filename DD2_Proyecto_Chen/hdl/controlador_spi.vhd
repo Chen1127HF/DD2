@@ -9,35 +9,45 @@ use ieee.std_logic_unsigned.all;
 
 -- Funcionalidad
 -- El modulo maneja la comunicacion con el master SPI. Se encarga de:
---       1.- Configurar los registros de configuracion. Actualmente los registros configurados son:
---              Registro 1:
---              Registro 4:
---       2.- Ordenar la medida de los ejes X e Y del acelerómetro cada 5ms. 
---           Para ello se envia el dato XXXXXX
+--       1.- Enviar los registros de configuracion. Actualmente los registros configurados son:
+--              Registro 1 (h20): 01100011                   valor
+--                         - bit [7..4]  -> frecuencia 200Hz   0110
+--                         - bit (3)    -> normal mode         1
+--                         - bit (2)    -> Z-axis              0
+--                         - bit (1)    -> Y-axis              1
+--                         - bit (0)    -> X-axis              1
 --
+--              Registro 4 (h23): 10000000 (activar bit BDU)
+--
+--       2.- Ordenar la medida de los ejes X e Y del acelerómetro cada 5ms. 
+--           Para ello se envia el dato 11101000:
+--                         - bit (7)    -> R/W lectura          1
+--                         - bit (6)    -> auto incrementar     1
+--                         - bit [5..0] -> direccion           101000 (h28)
 
--- Entradas síncronas:
+-- Entradas:
 --        libre:   Indica si esta libre para comenzar la comunicacion.     Origen: Master SPI
 --        fin_tx:  Indica cuando se ha terminador de transferir el         Origen: Master SPI
 --                 último bit de la transmision.
 -- Salidas:                           
---        ini_tx:  Indica que se desea realizar una tranferencia.          Destino: Master SPI
---        dato:    Indica cual es el dato que se desea transferir.         Destino: Master SPI
+--        ini_tx:   Indica que se desea realizar una tranferencia.         Destino: Master SPI
+--        dato_cmd: Indica cual es el dato que se desea transferir.        Destino: Master SPI
 
 entity controlador_spi is
 port(clk:           in     std_logic;
-     nRst:          in     std_logic;                     -- Habilita la cuenta
-     libre:         in     std_logic;                     -- Indica el final de la transmision
-     fin_tx:        in     std_logic;
+     nRst:          in     std_logic;                     
+     libre:         in     std_logic;                     -- Indica si se puede iniciar la comunicación
+     fin_tx:        in     std_logic;                     -- Indica el final de la transmision
      ini_tx:        buffer std_logic;                     -- Inicio de transmision
-     dato:          buffer std_logic_vector(15 downto 0)  -- Byte a enviar
+     dato_cmd:      buffer std_logic_vector(15 downto 0)  -- Byte a enviar
     );
 end entity;
 
 architecture rtl of controlador_spi is
 
-  --constant fdc_5ms: natural := 250000; 
-  constant fdc_5ms: natural := 500;  --Simulacion
+  constant fdc_5ms: natural := 250000; 
+--  constant fdc_5ms: natural := 500;  --Simulacion
+
 
   -- Contador registros. Indica cuantos registros se han enviado y 
   -- cual es el siguiente a enviar. 
@@ -78,16 +88,16 @@ begin
   process(nRst, clk)
   begin
     if nRst = '0' then
-      dato <= (others => '0');
+      dato_cmd <= (others => '0');
     elsif clk'event and clk = '1' then
       if    cmd = 0 and libre = '1' then   
-        dato <= "00100011" & "10000000";             -- Registro 4
+        dato_cmd <= "00100011" & "10000000";             -- Registro 4
 
       elsif cmd = 1 and libre = '1' then
-        dato <= "00100000" & "01100011";             -- Registro 1 
+        dato_cmd <= "00100000" & "01100011";             -- Registro 1 
  
       elsif cmd = 2 then                            
-        dato <= "11101000" & "11110000";             -- Medidas
+        dato_cmd <= "11101000" & "11110000";             -- Medidas
        end if;
     end if;
   end process;
