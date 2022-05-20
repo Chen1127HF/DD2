@@ -4,6 +4,10 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 
+-- Master SPI
+-- Funcion: se comunica con el esclavo SPI. En funcion del dato que se le introduzca (dato_cmd) podrá
+--
+--          1. Inicialmente, le manda al esclavo 
 entity master_spi is
 port(clk:     		in     std_logic;
      nRst:    		in     std_logic;
