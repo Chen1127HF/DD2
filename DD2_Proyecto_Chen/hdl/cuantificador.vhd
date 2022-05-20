@@ -1,3 +1,5 @@
+-- Autores: Haofan Chen e Isabel Nieto
+-- Fecha: 18/05/2022
 library work;
 use work.auxiliar.all;
 

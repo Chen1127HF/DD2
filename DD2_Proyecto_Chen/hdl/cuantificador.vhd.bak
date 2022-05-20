@@ -9,17 +9,17 @@ entity cuantificador is
 generic(DIV_1ms : natural     :=99999;
         N:        in positive := 16);  -- numero de registros del banco (potencia de 2)
 
-port(nRst:             in     std_logic;
-     clk:              in     std_logic;
+port(nRst:       in     std_logic;
+     clk:        in     std_logic;
 
-     X_media:          in     std_logic_vector(11 downto 0); 
-     Y_media:          in     std_logic_vector(11 downto 0);
+     X_media:    in     std_logic_vector(11 downto 0); 
+     Y_media:    in     std_logic_vector(11 downto 0);
 
-     ena:              in     std_logic;
+     ena:        in     std_logic;
 
-     mux_disp:         buffer std_logic_vector(7 downto 0);
-     disp:             buffer std_logic_vector(7 downto 0);
-     leds:             buffer std_logic_vector(7 downto 0));
+     mux_disp:   buffer std_logic_vector(7 downto 0);
+     disp:       buffer std_logic_vector(7 downto 0);
+     leds:       buffer std_logic_vector(7 downto 0));
 
 end entity;
 
