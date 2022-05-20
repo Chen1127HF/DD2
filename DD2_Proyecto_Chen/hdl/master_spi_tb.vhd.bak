@@ -14,8 +14,7 @@ architecture test of master_spi_tb is
 
   signal ena_rd:   std_logic;                     -- Habilitación de lectura
   signal data_rd:  std_logic_vector(7 downto 0);  -- Registro de lectura
-  signal libre:    std_logic;                     -- Indica si el bus esta disponible para una transmision
-
+ 
   signal nCS:      std_logic;                     -- Chip Selection
   signal SPC:      std_logic;                     -- Clock SPI (5 MHz) 
   signal SDI:      std_logic;                     -- Slave Data input  (connected to Master SDO)
@@ -74,7 +73,7 @@ begin
     wait until clk'event and clk = '1';
     ena <= '0';
 
-    wait until clk'event and clk = '1' and libre = '1';    -- Esperar a que se termine la tx
+    wait until clk'event and clk = '1' and nCS = '1';    -- Esperar a que se termine la tx
     wait for 50*T_CLK;
     wait until clk'event and clk = '1';
 
@@ -84,7 +83,7 @@ begin
     wait until clk'event and clk = '1';
     ena <= '0';
 
-    wait until clk'event and clk = '1' and libre = '1';
+    wait until clk'event and clk = '1' and nCS = '1';
     wait for 50*T_CLK;
     wait until clk'event and clk = '1';
 
@@ -93,7 +92,7 @@ begin
     ena <= '1';
     wait until clk'event and clk = '1';
     ena <= '0';
-    wait until clk'event and clk = '1' and libre = '1';
+    wait until clk'event and clk = '1' and nCS = '1';
     wait for 50*T_CLK;
     wait until clk'event and clk = '1';
 
@@ -102,7 +101,7 @@ begin
     ena <= '1';
     wait until clk'event and clk = '1';
     ena <= '0';
-    wait until clk'event and clk = '1' and libre = '1';
+    wait until clk'event and clk = '1' and nCS = '1';
 
     -- Esperamos 50 ciclos de reloj
     wait for 50*T_CLK;
@@ -119,7 +118,7 @@ begin
     wait until clk'event and clk = '1';
     ena <= '0';
 
-    wait until clk'event and clk = '1' and libre = '1';
+    wait until clk'event and clk = '1' and nCS = '1';
     wait until clk'event and clk = '1';
     wait until clk'event and clk = '1';
 
@@ -129,7 +128,7 @@ begin
     wait until clk'event and clk = '1';
     ena <= '0';
 
-    wait until clk'event and clk = '1' and libre = '1';
+    wait until clk'event and clk = '1' and nCS = '1';
     wait until clk'event and clk = '1';
     wait until clk'event and clk = '1';
 
@@ -139,7 +138,7 @@ begin
     wait until clk'event and clk = '1';
     ena <= '0';
 
-    wait until clk'event and clk = '1' and libre = '1';
+    wait until clk'event and clk = '1' and nCS = '1';
     wait until clk'event and clk = '1';
     wait until clk'event and clk = '1';
 
@@ -157,21 +156,30 @@ begin
     wait until clk'event and clk = '1';
     ena <= '0';
 
-    wait until clk'event and clk = '1' and libre = '1';
+    wait until clk'event and clk = '1' and nCS = '1';
 
     -- Esperamos 50 ciclos de reloj
     wait for 50*T_CLK;
     wait until clk'event and clk = '1';    
 
     -- Comprobación cambio posición:
-    pos_X <= "11";
-    pos_Y <= "11";
+    pos_X <= "10";
+    pos_Y <= "01";
+
+    ena <= '1';
+    wait until clk'event and clk = '1';
+    ena <= '0';
+    wait until clk'event and clk = '1' and nCS = '1';
+
+    -- Esperamos 50 ciclos de reloj
+    wait for 50*T_CLK;
+    wait until clk'event and clk = '1'; 
 
     ena <= '1';
     wait until clk'event and clk = '1';
     ena <= '0';
 
-    wait until clk'event and clk = '1' and libre = '1';
+    wait until clk'event and clk = '1' and nCS = '1';
 
     -- Esperamos 50 ciclos de reloj
     wait for 50*T_CLK;
@@ -192,7 +200,7 @@ begin
                 SDO      => SDO,
                 ena_rd   => ena_rd,
                 dato_rd  => data_rd,
-                nCS      => libre,
+                nCS      => nCS,
                 SPC      => SPC,
                 SDI      => SDI,
                 fin_tx   => fin_tx);

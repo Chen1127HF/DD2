@@ -80,6 +80,7 @@ begin
                 nRst    => nRst,
                 ena_1ms => ena_1ms,
                 ena_5ms => ena_5ms);
+
   controlador: 
        entity work.controlador_spi(rtl)
        port map(clk      => clk,
@@ -111,6 +112,7 @@ begin
                 SPC   => SPC,
                 SDI   => SDI,
                 SDO   => SDO);
+
   calc_offset: 
        entity work.calc_offset(rtl)
        generic map(N => 64)

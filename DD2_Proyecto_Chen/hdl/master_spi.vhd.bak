@@ -5,17 +5,17 @@ use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 
 entity master_spi is
-port(clk:     		in     std_logic;
-     nRst:    		in     std_logic;
-     ini_tx:  		in     std_logic;                     -- Inicio de transmision
-     dato_cmd:          in     std_logic_vector(15 downto 0); -- Byte de dato introducido
-     SDO:     		in     std_logic;                     -- Slave Data Output (Master input)
-     ena_rd:  		buffer std_logic;                     -- Habilitación de lectura
-     dato_rd: 		buffer std_logic_vector(7 downto 0);  -- Byte de SDO, entregado por slave
-     nCS:     		buffer std_logic;                     -- Chip Selection
-     SPC:     		buffer std_logic;                     -- Clock SPI (5 MHz) 
-     SDI:     		buffer std_logic;                     -- Slave Data input  (connected to Master SDO)
-     fin_tx:  		buffer std_logic                      -- fin de la comunicacion
+port(clk:      in     std_logic;
+     nRst:     in     std_logic;
+     ini_tx:   in     std_logic;                     -- Inicio de transmision
+     dato_cmd: in     std_logic_vector(15 downto 0); -- Byte de dato introducido
+     SDO:      in     std_logic;                     -- Slave Data Output (Master input)
+     ena_rd:   buffer std_logic;                     -- Habilitación de lectura
+     dato_rd:  buffer std_logic_vector(7 downto 0);  -- Byte de SDO, entregado por slave
+     nCS:      buffer std_logic;                     -- Chip Selection
+     SPC:      buffer std_logic;                     -- Clock SPI (5 MHz) 
+     SDI:      buffer std_logic;                     -- Slave Data input  (connected to Master SDO)
+     fin_tx:   buffer std_logic                      -- fin de la comunicacion
      );
 end entity;
 
@@ -74,9 +74,9 @@ begin
       SPC <= '1';
     elsif clk'event and clk = '1' then
       if nCS = '0' and cnt_div > 1 and cnt_div < 35 then
-				SPC <= '0';
-			else
-				SPC <= '1';
+        SPC <= '0';
+      else
+        SPC <= '1';
       end if;
     end if;
   end process;
