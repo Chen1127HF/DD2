@@ -112,9 +112,9 @@ begin
   offset_X <= acum_X(9+ceil_log(N))&acum_X(9+ceil_log(N) downto ceil_log(N));  -- bit 14 & bit(14 downto 5)
   offset_Y <= acum_Y(9+ceil_log(N))&acum_Y(9+ceil_log(N) downto ceil_log(N));  -- bit 14 & bit(14 downto 5)
 
-  X_out_bias <=  offset_X        when offset_rdy = '1' else  -- A completar por el estudiante
+  X_out_bias <=  muestra_X - offset_X        when offset_rdy = '1' else  -- A completar por el estudiante
                 (others => '0');
-  Y_out_bias <=  offset_Y        when offset_rdy = '1' else  -- A completar por el estudiante
+  Y_out_bias <=  muestra_Y - offset_Y        when offset_rdy = '1' else  -- A completar por el estudiante
                 (others => '0');
 
 end rtl;

@@ -38,8 +38,8 @@ architecture estructural of acelerometro is
   signal X_media:  std_logic_vector(11 downto 0);    -- Medida final del eje X    (Estimador -> Cuantificador)
   signal Y_media:  std_logic_vector(11 downto 0);    -- Medida final del eje Y    (Estimador -> Cuantificador)
 
-	signal ena_1ms: std_logic;
-	signal ena_5ms: std_logic;
+  signal ena_1ms: std_logic;
+  signal ena_5ms: std_logic;
 
 begin
 

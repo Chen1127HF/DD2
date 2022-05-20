@@ -95,9 +95,9 @@ begin
     ini_tx <= '0';
   elsif clk'event and clk = '1' then
     if libre = '1' and ini_tx = '0' and ena_5ms = '1' then -- Se inciará la comunicacion si: 
-      ini_tx <= '1';                                                     -- El master esta libre   
-    else                                                                 -- No se ha iniciado ya la comunicacion
-      ini_tx <= '0';                                                     -- Si se están enviado registros o se ha activado la señal ena_5ms
+      ini_tx <= '1';                                       -- El master esta libre   
+    else                                                   -- No se ha iniciado ya la comunicacion
+      ini_tx <= '0';                                       -- Si se están enviado registros o se ha activado la señal ena_5ms
     end if;
   end if;
   end process;

@@ -67,7 +67,7 @@ begin
     wait until clk'event and clk = '1';
     nRst <= '1';
 
-    wait for 10000000*T_CLK;
+    wait for 2500*20*T_CLK;
 
     assert false
     report "done"

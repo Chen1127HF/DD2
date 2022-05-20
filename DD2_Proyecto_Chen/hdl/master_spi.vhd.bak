@@ -143,7 +143,7 @@ begin
     if nRst = '0' then
       SDO_T1 <= '0';
     elsif clk'event and clk = '1' then
-			SDO_T1 <= SDO;
+      SDO_T1 <= SDO;
     end if;
   end process;
 

@@ -16,7 +16,7 @@ port(nRst:       in     std_logic;
      X_media:    in     std_logic_vector(11 downto 0); 
      Y_media:    in     std_logic_vector(11 downto 0);
 
-		 ena_1ms:		 in	std_logic;
+     ena_1ms:    in	std_logic;
 
      mux_disp:   buffer std_logic_vector(7 downto 0);
      disp:       buffer std_logic_vector(7 downto 0);

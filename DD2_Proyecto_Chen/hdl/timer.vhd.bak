@@ -17,8 +17,8 @@ end entity;
 
 architecture rtl of timer is			
 
-  --constant fdc_5ms: natural := 250000; 
-	constant fdc_5ms: natural		:= 2500;  --Simulacion
+  constant fdc_5ms: natural := 250000; 
+	--constant fdc_5ms: natural		:= 2500;  --Simulacion
 
 	constant DIV_1ms : natural  :=99999;
 

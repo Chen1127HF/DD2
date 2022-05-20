@@ -5,6 +5,19 @@ use ieee.std_logic_unsigned.all;
 entity master_spi_tb is
 end entity;
 
+-- Test del master SPI
+-- Pruebas:
+--    1. Escritura de comandos. Se prueba con 4 datos:
+--              - Dato X"0000"
+--              - Dato X"5555"
+--              - Registro 1 de configuracion X"2000"
+--              - Registro 4 de configuracion X"2363"
+--
+--    2. Lectura de medidas. Se ha probado introduciendo los siguientes datos:
+--              - Dato X"1111"
+--              - Dato X"AAAA"
+--              - Registro X"E800" 
+
 architecture test of master_spi_tb is
   signal clk:      std_logic;
   signal nRst:     std_logic;
@@ -78,7 +91,7 @@ begin
     wait until clk'event and clk = '1';
 
     -- Dato: alternar 1 y 0
-    dato_cmd <= "0101010101010101";                         
+    dato_cmd <= X"5555";                         
     ena <= '1';
     wait until clk'event and clk = '1';
     ena <= '0';
@@ -88,7 +101,7 @@ begin
     wait until clk'event and clk = '1';
 
     -- Dato: Configuracion registro 4
-    dato_cmd <= "0101011110000000";
+    dato_cmd <= X"2363";
     ena <= '1';
     wait until clk'event and clk = '1';
     ena <= '0';
@@ -97,7 +110,7 @@ begin
     wait until clk'event and clk = '1';
 
     -- Dato: configuracion registro 1
-    dato_cmd <= "0101010001100011";
+    dato_cmd <= X"2000";
     ena <= '1';
     wait until clk'event and clk = '1';
     ena <= '0';
@@ -123,7 +136,7 @@ begin
     wait until clk'event and clk = '1';
 
     -- Dato: 1 y 0 alternando
-    dato_cmd <= "1010101010101010";
+    dato_cmd <= X"AAAA";
     ena <= '1';
     wait until clk'event and clk = '1';
     ena <= '0';
@@ -133,7 +146,7 @@ begin
     wait until clk'event and clk = '1';
 
     -- Dato: pedir lectura bytes
-    dato_cmd <= "1101110011110000";
+    dato_cmd <= X"E800";
     ena <= '1';
     wait until clk'event and clk = '1';
     ena <= '0';
@@ -143,48 +156,25 @@ begin
     wait until clk'event and clk = '1';
 
     -- Esperamos 50 ciclos de reloj
-    wait for 50*T_CLK;
+    wait for 200*T_CLK;
     wait until clk'event and clk = '1';    
 
 
-
-    -- Comprobación cambio posición:
-    pos_X <= "01";
-    pos_Y <= "10";
-
+    -- Comprobación activación de ena cuando no esta disponible el bus.
     ena <= '1';
     wait until clk'event and clk = '1';
     ena <= '0';
 
-    wait until clk'event and clk = '1' and nCS = '1';
-
-    -- Esperamos 50 ciclos de reloj
-    wait for 50*T_CLK;
-    wait until clk'event and clk = '1';    
-
-    -- Comprobación cambio posición:
-    pos_X <= "10";
-    pos_Y <= "01";
-
-    ena <= '1';
-    wait until clk'event and clk = '1';
-    ena <= '0';
-    wait until clk'event and clk = '1' and nCS = '1';
-
-    -- Esperamos 50 ciclos de reloj
-    wait for 50*T_CLK;
+    wait for 500*T_CLK;
     wait until clk'event and clk = '1'; 
 
     ena <= '1';
     wait until clk'event and clk = '1';
-    ena <= '0';
+    ena <= '0';  
 
     wait until clk'event and clk = '1' and nCS = '1';
-
-    -- Esperamos 50 ciclos de reloj
-    wait for 50*T_CLK;
-    wait until clk'event and clk = '1';    
-
+    wait until clk'event and clk = '1';
+    wait until clk'event and clk = '1';
 
 
     assert false

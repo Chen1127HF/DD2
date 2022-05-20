@@ -1,5 +1,5 @@
 -- Autores: Haofan Chen e Isabel Nieto
--- Fecha: 18/05/2022
+-- Fecha: 20/05/2022
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
