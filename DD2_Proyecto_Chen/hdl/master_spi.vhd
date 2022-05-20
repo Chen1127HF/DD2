@@ -70,12 +70,25 @@ begin
     end if;
   end process;
 
+
+  -- SPC
+  process(clk, nRst)
+  begin
+    if nRst = '0' then
+        SPC <= '1';
+    elsif clk'event and clk = '1' then
+      if cnt_div > 1 and cnt_div < 7 and nCS = '0' then
+        SPC <= '0';
+      else
+        SPC <= '1';
+      end if;
+    end if;
+  end process;
+
   -- Generacion de las señales SPI
-  SPC      <= '0' when nCS = '0' and cnt_div > 1 and cnt_div < 7 else
-              '1';
   SPC_up   <= '1' when nCS = '0' and cnt_div = 7 else
               '0';
-  SPC_down <= '1' when nCS = '0' and cnt_div = 2 else
+  SPC_down <= '1' when nCS = '0' and cnt_div = 3 else
               '0';
   nCS      <= '0' when cnt_div > 0 else
               '1';

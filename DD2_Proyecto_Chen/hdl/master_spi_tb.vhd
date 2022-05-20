@@ -10,7 +10,7 @@ architecture test of master_spi_tb is
   signal nRst:    		std_logic;
 
   signal ena:     		std_logic;                     -- Inicio de transmision
-  signal dato_cmd:    std_logic_vector(15 downto 0); -- Byte de dato introducido
+  signal dato_cmd:              std_logic_vector(15 downto 0); -- Byte de dato introducido
 
   signal ena_rd:  		std_logic;                     -- Habilitación de lectura
   signal data_rd: 		std_logic_vector(7 downto 0);  -- Registro de lectura
